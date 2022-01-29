@@ -2,6 +2,12 @@
     font-family: roboto;
     src: url(../../complementos/font/roboto/RobotoCondensed-Bold.ttf);
 }
+
+@font-face {
+    font-family: nunito;
+    src: url(../../complementos/font/Nunito/Nunito-Regular.ttf);
+}
+
 :root{
     --primary-color: #00868A;
     --secondary-color: #FAEED2;
@@ -9,6 +15,7 @@
     --fourth-color: #D885A3;
     --heigth-nav: 3.5rem;
     --font-header: roboto;
+    --font-body: nunito;
 }
 
 body{
@@ -31,6 +38,34 @@ nav a{
     font-size: 1.5rem;
 }
 
+.menu_items{
+    background-color: var(--primary-color);
+}
+
+.menu_items ul{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+
+.menu_items ul li a{
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+}
+
+.menu_items ul li:hover{
+    background-color: var(--secondary-color);
+}
+
+.menu_items ul li:hover a{
+    color: var(--primary-color);
+}
+
+.hide{
+    display: none;
+}
+
 @media (max-width: 576px){
     nav{
         display: flex;
@@ -38,5 +73,16 @@ nav a{
         justify-content: space-around;
         align-items: center;
         height: var(--heigth-nav);
+    }
+
+    .menu_items ul{
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu_items ul li{
+        padding-top: .7rem;
+        padding-bottom: .7rem;
     }
 }
