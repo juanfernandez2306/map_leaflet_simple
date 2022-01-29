@@ -1,0 +1,32 @@
+:root{
+    --primary-color: #655D8A;
+    --secondary-color: #FFEFEF;
+    --third-color: #7897AB;
+    --fourth-color: #D885A3;
+    --heigth-nav: 3.5rem;
+}
+
+body{
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+nav a{
+    color: var(--secondary-color);
+}
+
+@media (max-width: 576px){
+    nav{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: var(--heigth-nav);
+        background-color: var(--primary-color);
+    }
+}
