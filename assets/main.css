@@ -1,9 +1,14 @@
+@font-face {
+    font-family: roboto;
+    src: url(../../complementos/font/roboto/RobotoCondensed-Bold.ttf);
+}
 :root{
-    --primary-color: #655D8A;
-    --secondary-color: #FFEFEF;
+    --primary-color: #00868A;
+    --secondary-color: #FAEED2;
     --third-color: #7897AB;
     --fourth-color: #D885A3;
     --heigth-nav: 3.5rem;
+    --font-header: roboto;
 }
 
 body{
@@ -16,8 +21,14 @@ a{
     text-decoration: none;
 }
 
+nav{
+    background-color: var(--primary-color);
+}
+
 nav a{
     color: var(--secondary-color);
+    font-family: roboto;
+    font-size: 1.5rem;
 }
 
 @media (max-width: 576px){
@@ -27,6 +38,5 @@ nav a{
         justify-content: space-around;
         align-items: center;
         height: var(--heigth-nav);
-        background-color: var(--primary-color);
     }
 }
