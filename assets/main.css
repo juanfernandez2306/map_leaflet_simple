@@ -13,7 +13,7 @@
     --secondary-color: #FAEED2;
     --third-color: #7897AB;
     --fourth-color: #D885A3;
-    --heigth-nav: 3.5rem;
+    --heigth-nav: 3.6rem;
     --font-header: roboto;
     --font-body: nunito;
 }
@@ -54,14 +54,6 @@ nav a{
     font-family: var(--font-body);
 }
 
-.menu_items ul li:hover{
-    background-color: var(--secondary-color);
-}
-
-.menu_items ul li:hover a{
-    color: var(--primary-color);
-}
-
 .hide{
     display: none;
 }
@@ -84,5 +76,51 @@ nav a{
     .menu_items ul li{
         padding-top: .7rem;
         padding-bottom: .7rem;
+    }
+
+    .menu_items ul li:hover{
+        background-color: var(--secondary-color);
+    }
+    
+    .menu_items ul li:hover a{
+        color: var(--primary-color);
+    }
+}
+
+@media (min-width: 576px){
+    main{
+        width: 100vw;
+        max-width: 1080px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    header{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        background-color: var(--primary-color);
+        height: var(--heigth-nav);
+    }
+
+    .menu_items ul{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .menu_items ul li{
+        padding-right: .5rem;
+        padding-left: .5rem;
+    }
+
+    .menu_items ul li:hover a{
+        font-weight: 700;
+        font-size: 1.3rem;
+    }
+
+    #burge_icon, #items_legend{
+        display: none;
     }
 }
