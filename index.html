@@ -5,28 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa sanitario Zulia</title>
+
+    <link rel="stylesheet" href="../complementos/fontawesome/fontawesome/all.min.css">
     <link rel="stylesheet" href="assets/main.css">
+    <script src="assets/main.js"></script>
 </head>
 <body>
     <main>
         <header>
             <nav>
-                <a href="#">Mapa sanitario Zulia</a>
-                <a href="#" id="burge_icon">Cerrar</a>
+                <a href="#">
+                    Mapa sanitario Zulia
+                </a>
+                <a href="#" id="burge_icon">
+                    <i id="font_burge" class="fas fa-bars"></i>
+                    <i id="font_close" class="fas fa-times hide"></i>
+                </a>
             </nav>
-            <section class="menu_items">
+            <section class="menu_items hide_menu">
                 <ul>
                     <li>
-                        <a>Geolocalización</a>
+                        <a>
+                            <i class="fas fa-map"></i>
+                            <b class="items_content">Geolocalización</b>
+                        </a>
                     </li>
                     <li>
-                        <a>Configuración capa ASIC</a>
+                        <a>
+                            <i class="fas fa-exchange-alt"></i>
+                            <b class="items_content">Configuración capa ASIC</b>
+                        </a>
                     </li>
                     <li id="items_legend">
-                        <a>Leyenda</a>
+                        <a>
+                            <i class="fas fa-list"></i>
+                            <b>Leyenda</b>
+                        </a>
                     </li>
                     <li>
-                        <a>Acerca del proyecto</a>
+                        <a>
+                            <i class="fas fa-info-circle"></i>
+                            <b class="items_content">Acerca del proyecto</b>
+                        </a>
                     </li>
                 </ul>
             </section>
