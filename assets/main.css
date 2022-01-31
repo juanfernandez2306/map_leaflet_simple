@@ -114,10 +114,26 @@ nav a{
     padding-right: .4rem;
 }
 
+#geolocation button:disabled{
+    background-color: var(--fifth-color);
+}
 
+button b{
+    font-weight: normal;
+}
 
 .hide{
     display: none;
+}
+
+.fade_in_color{
+    animation: fade_in_color 2s infinite;
+}
+
+@keyframes fade_in_color{
+    0% {color: var(--secondary-color);}
+    50% {color: var(--primary-color);}
+    100% {color: var(--secondary-color)}
 }
 
 @media (max-width: 576px){
