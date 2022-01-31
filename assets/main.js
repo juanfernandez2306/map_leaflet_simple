@@ -19,10 +19,10 @@ function state_button(e){
     e.target.classList.remove('active');
     e.target.disabled = true;
 
-    let element_i = e.target.querySelector('i');
-    let class_name = element_i.className;
+    var element_i = e.target.querySelector('i');
+    var class_name = element_i.className;
 
-    let class_font_awesome = search_class_font_awesome(class_name);
+    var class_font_awesome = search_class_font_awesome(class_name);
 
     element_i.classList.remove(class_font_awesome);
     element_i.classList.add('fa-circle');
