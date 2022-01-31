@@ -55,6 +55,67 @@ nav a{
     font-family: var(--font-body);
 }
 
+#map{
+    height: calc(100vh - var(--heigth-nav));
+    background-color: var(--third-color);
+}
+
+
+/*max value z-index in css leaflet is 1000*/
+.sidebar{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    width: 100vw;
+    max-width: 400px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1100;
+    padding-top: 1rem;
+}
+
+.sidebar .header_sidebar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.2rem;
+    font-family: var(--font-header);
+}
+
+#geolocation{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+#geolocation button{
+    width: 70%;
+    align-self: center;
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+    padding-top: .7rem;
+    padding-bottom: .7rem;
+    border-radius: .4rem;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+#geolocation button.active:hover{
+    background-color: var(--fourth-color);
+    color: var(--secondary-color);
+    border-style: none;
+    font-weight: 700;
+    box-shadow: .2rem .2rem .3rem .2rem;
+}
+
+.sidebar button i{
+    padding-right: .4rem;
+}
+
+
+
 .hide{
     display: none;
 }
