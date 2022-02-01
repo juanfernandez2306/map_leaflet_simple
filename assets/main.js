@@ -16,10 +16,10 @@ function search_class_font_awesome(text){
 function state_button(e){
     e.preventDefault();
     
-    e.target.classList.remove('active');
-    e.target.disabled = true;
+    this.classList.remove('active');
+    this.disabled = true;
 
-    var element_i = e.target.querySelector('i');
+    var element_i = this.querySelector('i');
     var class_name = element_i.className;
 
     var class_font_awesome = search_class_font_awesome(class_name);
