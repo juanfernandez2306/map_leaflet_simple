@@ -25,7 +25,7 @@
             <section class="menu_items hide_menu">
                 <ul>
                     <li>
-                        <a>
+                        <a class="open_sidebar" data-sidebar="geolocation">
                             <i class="fas fa-map"></i>
                             <b class="items_content">Geolocalización</b>
                         </a>
@@ -51,14 +51,16 @@
                 </ul>
             </section>
         </header>
+
         <section id="map"></section>
-        <aside id="geolocation" class="sidebar">
+
+        <aside id="geolocation" class="sidebar hide">
             <div class="header_sidebar">
                 <h3>
                     <i class="fas fa-map"></i>
                     Geolocalización
                 </h3>
-                <a>
+                <a class="btn_close_sidebar" data-sidebar="geolocation">
                     <i class="fas fa-times"></i>
                 </a>
             </div>
@@ -75,6 +77,8 @@
                 <b>Zoom</b>
             </button>
         </aside>
+
+        <aside id="wallpaper" class="hide"></aside>
     </main>
 </body>
 </html>

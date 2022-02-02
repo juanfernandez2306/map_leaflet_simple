@@ -84,13 +84,21 @@ nav a{
     font-family: var(--font-header);
 }
 
-#geolocation{
+.sidebar .header_sidebar .btn_close_sidebar:hover{
+    color: var(--fourth-color);
+}
+
+.sidebar button i{
+    padding-right: .4rem;
+}
+
+.geolocation{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-#geolocation button{
+.geolocation button{
     width: 70%;
     align-self: center;
     font-size: 1.2rem;
@@ -102,7 +110,7 @@ nav a{
     color: var(--primary-color);
 }
 
-#geolocation button.active:hover{
+.geolocation button.active:hover{
     background-color: var(--fourth-color);
     color: var(--secondary-color);
     border-style: none;
@@ -110,17 +118,24 @@ nav a{
     box-shadow: .2rem .2rem .3rem .2rem;
 }
 
-.sidebar button i{
-    padding-right: .4rem;
-}
-
-#geolocation button:disabled{
+.geolocation button:disabled{
     background-color: var(--fifth-color);
 }
 
 button b{
     font-weight: normal;
 }
+
+.wallpaper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1080;
+    background-color: rgba(0, 0, 0, .5);
+}
+
 
 .hide{
     display: none;

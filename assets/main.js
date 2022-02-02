@@ -13,6 +13,45 @@ function search_class_font_awesome(text){
     }
 }
 
+function close_sidebar(e){
+    e.preventDefault();
+    var name_sidebar = this.dataset.sidebar;
+    var id_sidebar = '#' + name_sidebar;
+    var sidebar = selectElement(id_sidebar);
+
+    sidebar.classList.remove(name_sidebar);
+    sidebar.classList.add('hide');
+
+    var wallpaper = selectElement('#wallpaper');
+
+    wallpaper.classList.remove('wallpaper');
+    wallpaper.classList.add('hide');
+    
+}
+
+function open_sidebar(e){
+    e.preventDefault();
+
+    var btn = this;
+    btn.disabled = true;
+
+    var name_sidebar = this.dataset.sidebar;
+    var id_sidebar = '#' + name_sidebar;
+    var sidebar = selectElement(id_sidebar);
+
+    var wallpaper = selectElement('#wallpaper');
+
+    wallpaper.classList.remove('hide');
+    wallpaper.classList.add('wallpaper');
+
+    sidebar.classList.add(name_sidebar);
+    sidebar.classList.remove('hide');
+
+    setTimeout(() => {
+        btn.removeAttribute('disable');
+    }, 1000);
+}
+
 function state_button(e){
     e.preventDefault();
     
@@ -44,6 +83,9 @@ function start(){
     selectElement('#start_geolocation').addEventListener('click', state_button, false);
     selectElement('#remove_geolocation').addEventListener('click', state_button, false);
     selectElement('#zoom_geolocation').addEventListener('click', state_button, false);
+
+    selectElement('.btn_close_sidebar').addEventListener('click', close_sidebar, false);
+    selectElement('.open_sidebar').addEventListener('click', open_sidebar, false);
 
 }
 
