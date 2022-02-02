@@ -92,7 +92,8 @@ nav a{
     padding-right: .4rem;
 }
 
-.geolocation{
+.geolocation,
+.config_asic{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -136,6 +137,81 @@ button b{
     background-color: rgba(0, 0, 0, .5);
 }
 
+.config_asic .items{
+    align-self: center;
+    width: 70%;
+    text-align: center;
+}
+
+
+.sidebar_checked{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+#config_asic_text{
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+}
+
+/* The switch - the box around the slider */
+.config_asic .items .switch{
+    position: relative;
+    display: inline-block;
+    width: 4rem;
+    height: 2.3rem;
+}
+
+/* Hide default HTML checkbox */
+.config_asic .items .switch input{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.config_asic .items .switch .slider{
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--fifth-color);
+    transition: .4s;
+}
+
+.config_asic .items .switch .slider:before{
+    position: absolute;
+    content: "";
+    height: 1.8rem;
+    width: 1.8rem;
+    left: .3rem;
+    bottom: .3rem;
+    background-color: var(--secondary-color);
+    transition: .4s;
+}
+
+.config_asic .items .switch input:checked + .slider{
+    background-color: var(--primary-color);
+}
+
+.config_asic .items .switch input:focus + .slider{
+    box-shadow: 0 0 .2rem var(--primary-color);
+}
+
+.config_asic .items .switch input:checked + .slider:before{
+    transform: translateX(1.6rem);
+}
+
+/* Rounded sliders */
+.config_asic .items .switch .slider.round{
+    border-radius: 2.15rem;
+}
+
+.config_asic .items .switch .slider.round:before{
+    border-radius: 50%;
+}
 
 .hide{
     display: none;

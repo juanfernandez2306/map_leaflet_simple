@@ -76,6 +76,19 @@ function state_menu_burge(e){
     selectElement('.menu_items').classList.toggle('hide_menu');
 }
 
+function state_btn_config_asic(){
+    const sidebar = selectElement('#config_asic');
+    const config_asic_element_b = selectElement('#config_asic_element_b');
+    if(this.checked){
+        sidebar.classList.add('sidebar_checked');
+        config_asic_element_b.innerHTML = 'desactivar'
+    }else{
+        sidebar.classList.remove('sidebar_checked');
+        config_asic_element_b.innerHTML = 'activar';
+    }
+
+}
+
 function start(){
 
     selectElement('#burge_icon').addEventListener('click', state_menu_burge, false);
@@ -86,6 +99,8 @@ function start(){
 
     selectElement('.btn_close_sidebar').addEventListener('click', close_sidebar, false);
     selectElement('.open_sidebar').addEventListener('click', open_sidebar, false);
+
+    selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
 
 }
 
