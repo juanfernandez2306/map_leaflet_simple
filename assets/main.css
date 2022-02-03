@@ -235,25 +235,67 @@ button b{
     font-family: var(--font-body);
 }
 
-.information .items{
+.information .body{
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.information .body .items{
     align-self: center;
     width: 70%;
 }
 
-.information .items p{
+.information .body .items p{
     text-align: justify;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-family: var(--font-body);
 }
 
-.information .items p a{
+.information .body .items p a{
     text-decoration: none;
     color: var(--secondary-color);
     font-weight: 700;
 }
 
-.information .items p a:hover{
+.information .body .items p a:hover{
     color: var(--fourth-color);
+}
+
+.information .body aside{
+    align-self: center;
+    width: 90%;
+    max-height: 80vh;
+    border: .2rem solid var(--fifth-color);
+}
+
+.information .body aside ul{
+    list-style: none;
+    padding: 0px .8rem;
+}
+
+.information .body aside ul li{
+    padding: .5rem;
+    border: .1rem solid var(--fifth-color);
+    text-align: justify;
+    font-size: 1rem;
+    font-family: var(--font-body);
+}
+
+.information .body aside ul li a{
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+
+.information .body aside ul li a:hover{
+    color: var(--fourth-color);
+    font-weight: 700;
+}
+
+.information .body footer{
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    align-self: center;
 }
 
 .hide{
