@@ -1,4 +1,5 @@
 const selectElement = (element) => document.querySelector(element);
+const selectElementAll = (element) => document.querySelectorAll(element);
 
 function search_class_font_awesome(text){
     let array_text = text.split(' ');
@@ -97,8 +98,13 @@ function start(){
     selectElement('#remove_geolocation').addEventListener('click', state_button, false);
     selectElement('#zoom_geolocation').addEventListener('click', state_button, false);
 
-    selectElement('.btn_close_sidebar').addEventListener('click', close_sidebar, false);
-    selectElement('.open_sidebar').addEventListener('click', open_sidebar, false);
+    selectElementAll('.btn_close_sidebar').forEach((element) =>{
+        element.addEventListener('click', close_sidebar, false);
+    });
+
+    selectElementAll('.open_sidebar').forEach((element) => {
+        element.addEventListener('click', open_sidebar, false);
+    });
 
     selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
 
