@@ -90,6 +90,48 @@ function state_btn_config_asic(){
 
 }
 
+async function get_data_json(url){
+    let response = await fetch(url);
+    let data = await response.json();
+    return data;
+}
+
+function create_map({polygon_asic}){
+    const initial_coordinates = [10.90847, -72.08446];
+
+    var map = L.map('map', {
+		center: initial_coordinates,
+		zoom: 7,
+		minZoom: 7,
+		maxZoom: 18
+	});
+
+    //extend Leaflet to create a GeoJSON layer from a TopoJSON file
+    L.TopoJSON = L.GeoJSON.extend({
+        addData: function (data) {
+            var geojson, key;
+            if (data.type === "Topology") {
+            for (key in data.objects) {
+                if (data.objects.hasOwnProperty(key)) {
+                geojson = topojson.feature(data, data.objects[key]);
+                L.GeoJSON.prototype.addData.call(this, geojson);
+                }
+            }
+            return this;
+            }
+            L.GeoJSON.prototype.addData.call(this, data);
+            return this;
+        }
+    });
+
+    L.topoJson = function (data, options) {
+        return new L.TopoJSON(data, options);
+    };
+
+    var geojson = L.topoJson(polygon_asic).addTo(map);
+
+}
+
 function start(){
 
     selectElement('#burge_icon').addEventListener('click', state_menu_burge, false);
@@ -107,6 +149,18 @@ function start(){
     });
 
     selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
+
+    Promise.all([
+        get_data_json('assets/polygon_asic.topojson')
+    ])
+    .then(array_response => {
+        create_map({
+            'polygon_asic': array_response[0]
+        })
+    })
+    .catch((error) => {
+		console.log(error);
+	})
 
 }
 
