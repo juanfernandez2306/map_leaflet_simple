@@ -1,5 +1,6 @@
 const selectElement = (element) => document.querySelector(element);
 const selectElementAll = (element) => document.querySelectorAll(element);
+const selectVarCSS = (element) => getComputedStyle(document.body).getPropertyValue(element);
 
 function search_class_font_awesome(text){
     let array_text = text.split(' ');
@@ -96,15 +97,66 @@ async function get_data_json(url){
     return data;
 }
 
-function create_map({polygon_asic}){
-    const initial_coordinates = [10.90847, -72.08446];
+function add_geojson({map, polygon_asic}){
+    var info = L.control();
 
-    var map = L.map('map', {
-		center: initial_coordinates,
-		zoom: 7,
-		minZoom: 7,
-		maxZoom: 18
-	});
+	info.onAdd = function(map){
+		this._div = L.DomUtil.create('div', 'info');
+		this.update();
+		return this._div;
+	}
+	
+	info.update = function(props){
+		if(props){
+            var html = props.asic;
+        }else{
+            var html = 'hola mundo';
+        }
+		
+		this._div.innerHTML = html;
+	}
+
+    var color_prueba = '#fff';
+
+	function style(feature) {
+		return {
+			weight: 2,
+			opacity: 1,
+			color: selectVarCSS('--primary-color'),
+			dashArray: '3',
+			fillOpacity: 0
+		};
+	}
+
+	function highlightFeature(e) {
+		var layer = e.target;
+
+		layer.setStyle({
+			weight: 5,
+			color: selectVarCSS('--primary-color'),
+			dashArray: '',
+			fillOpacity: 0.2
+			});
+
+		info.update(layer.feature.properties);
+	};
+
+	function resetHighlight(e) {
+		geojson.resetStyle(e.target);
+		info.update();
+	}
+
+	function zoomToFeature(e) {
+		map.fitBounds(e.target.getBounds());
+	}
+
+	function onEachFeature(feature, layer){
+		layer.on({
+			mouseover: highlightFeature,
+			mouseout: resetHighlight,
+			click: zoomToFeature
+		});
+	}
 
     //extend Leaflet to create a GeoJSON layer from a TopoJSON file
     L.TopoJSON = L.GeoJSON.extend({
@@ -128,8 +180,38 @@ function create_map({polygon_asic}){
         return new L.TopoJSON(data, options);
     };
 
-    var geojson = L.topoJson(polygon_asic).addTo(map);
+    var geojson = L.topoJson(polygon_asic, {
+        style: style,
+        onEachFeature: onEachFeature
+    });
 
+	info.addTo(map);
+	geojson.addTo(map);
+
+}
+
+function create_map({polygon_asic}){
+    const initial_coordinates = [10.90847, -72.08446];
+
+    var map = L.map('map', {
+		center: initial_coordinates,
+		zoom: 7,
+		minZoom: 7,
+		maxZoom: 18
+	});
+
+    
+    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+		minZoom: 7,
+		maxZoom: 19,
+		type:'osm'
+	}).addTo(map);
+
+    add_geojson({
+        'map': map,
+        'polygon_asic': polygon_asic
+    });
 }
 
 function start(){
