@@ -107,11 +107,14 @@ function add_geojson({map, polygon_asic}){
 	}
 	
 	info.update = function(props){
-		if(props){
-            var html = props.asic;
-        }else{
-            var html = 'hola mundo';
-        }
+        var html = `<div class='header_info'>
+            <svg><use xlink:href="#map-pin-2"/></svg>
+            <h3>AREA DE SALUD INTEGRAL COMUNITARIA <b>(ASIC)</b></h3>
+        </div>`;
+
+        var items_txt = (props) ? props.asic : 'DESPLACE EL CURSOR SOBRE UN ASIC';
+
+        html += `<div id="info_text_asic">${items_txt}</div>`;
 		
 		this._div.innerHTML = html;
 	}
