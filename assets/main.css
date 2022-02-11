@@ -349,9 +349,14 @@ button b{
 }
 
 div.info{
-    background-color: var(--secondary-color);
     max-width: 400px;
     padding: .5rem;
+    border-radius: .5rem;
+}
+
+.info.background_primary{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 .info .header_info{
@@ -363,18 +368,18 @@ div.info{
 
 .header_info h3{
     font-size: 1rem;
-    color: var(--primary-color);
-    font-weight: normal;
+    font-weight: 700;
     font-family: var(--font-body);
+    text-align: center;
 }
 
 .header_info svg{
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 #map-pin-2 path{
-    stroke: var(--primary-color);
+    stroke: var(--secondary-color);
 }
 
 #info_text_asic{
@@ -382,7 +387,6 @@ div.info{
     font-size: 1rem;
     font-weight: 700;
     font-family: var(--font-body);
-    color: var(--primary-color);
 }
 
 @media (max-width: 576px){
@@ -431,13 +435,10 @@ div.info{
     }
 
     .header_info svg{
-        width: 50px;
-        height: 50px;
+        width: 3.2rem;
+        height: 3.2rem;
     }
 
-    .header_info h3{
-        text-align: center;
-    }
 }
 
 @media (min-width: 576px){

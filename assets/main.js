@@ -97,11 +97,15 @@ async function get_data_json(url){
     return data;
 }
 
+function callback_asic(cod_asic){
+    console.log(cod_asic);
+}
+
 function create_config_geojson({map, polygon_asic, config}){
     var info = L.control();
 
 	info.onAdd = function(map){
-		this._div = L.DomUtil.create('div', 'info');
+		this._div = L.DomUtil.create('div', 'info background_primary');
 		this.update();
 		return this._div;
 	}
@@ -136,7 +140,7 @@ function create_config_geojson({map, polygon_asic, config}){
 			weight: 5,
 			color: config.color_highlightFeature,
 			dashArray: '',
-			fillOpacity: 0.2
+			fillOpacity: config.fillOpacity_highlightFeature
 			});
 
 		info.update(layer.feature.properties);
@@ -149,6 +153,13 @@ function create_config_geojson({map, polygon_asic, config}){
 
 	function zoomToFeature(e) {
 		map.fitBounds(e.target.getBounds());
+
+        var cod_asic = e.target.feature.properties.cod_asic;
+
+        if(config.callback instanceof Function){
+            config.callback(cod_asic);
+        }
+
 	}
 
 	function onEachFeature(feature, layer){
@@ -158,6 +169,25 @@ function create_config_geojson({map, polygon_asic, config}){
 			click: zoomToFeature
 		});
 	}
+
+    var geojson = L.topoJson(polygon_asic, {
+        style: style,
+        onEachFeature: onEachFeature
+    });
+
+	return [info, geojson];
+
+}
+
+function create_map({polygon_asic}){
+    const initial_coordinates = [10.90847, -72.08446];
+
+    var map = L.map('map', {
+		center: initial_coordinates,
+		zoom: 7,
+		minZoom: 7,
+		maxZoom: 18
+	});
 
     //extend Leaflet to create a GeoJSON layer from a TopoJSON file
     L.TopoJSON = L.GeoJSON.extend({
@@ -181,26 +211,6 @@ function create_config_geojson({map, polygon_asic, config}){
         return new L.TopoJSON(data, options);
     };
 
-    var geojson = L.topoJson(polygon_asic, {
-        style: style,
-        onEachFeature: onEachFeature
-    });
-
-	return [info, geojson];
-
-}
-
-function create_map({polygon_asic}){
-    const initial_coordinates = [10.90847, -72.08446];
-
-    var map = L.map('map', {
-		center: initial_coordinates,
-		zoom: 7,
-		minZoom: 7,
-		maxZoom: 18
-	});
-
-    
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		minZoom: 7,
@@ -210,7 +220,9 @@ function create_map({polygon_asic}){
 
     var config = {
         'color_feature': selectVarCSS('--primary-color'),
-        'color_highlightFeature': selectVarCSS('--primary-color')
+        'color_highlightFeature': selectVarCSS('--primary-color'),
+        'fillOpacity_highlightFeature': 0.2,
+        'callback': null
     }
 
     var [info, geojson] = create_config_geojson({
@@ -234,8 +246,12 @@ function create_map({polygon_asic}){
 
             if(checked_btn){
                 config.color_highlightFeature = selectVarCSS('--fourth-color');
+                config.fillOpacity_highlightFeature = 0.5;
+                config.callback = callback_asic;
             }else{
                 config.color_highlightFeature = selectVarCSS('--primary-color');
+                config.fillOpacity_highlightFeature = 0.2;
+                config.callback = null;
             }
         }
 
