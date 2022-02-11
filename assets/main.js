@@ -97,7 +97,7 @@ async function get_data_json(url){
     return data;
 }
 
-function add_geojson({map, polygon_asic}){
+function create_config_geojson({map, polygon_asic, config}){
     var info = L.control();
 
 	info.onAdd = function(map){
@@ -119,13 +119,11 @@ function add_geojson({map, polygon_asic}){
 		this._div.innerHTML = html;
 	}
 
-    var color_prueba = '#fff';
-
 	function style(feature) {
 		return {
 			weight: 2,
 			opacity: 1,
-			color: selectVarCSS('--primary-color'),
+			color: config.color_feature,
 			dashArray: '3',
 			fillOpacity: 0
 		};
@@ -136,7 +134,7 @@ function add_geojson({map, polygon_asic}){
 
 		layer.setStyle({
 			weight: 5,
-			color: selectVarCSS('--primary-color'),
+			color: config.color_highlightFeature,
 			dashArray: '',
 			fillOpacity: 0.2
 			});
@@ -188,8 +186,7 @@ function add_geojson({map, polygon_asic}){
         onEachFeature: onEachFeature
     });
 
-	info.addTo(map);
-	geojson.addTo(map);
+	return [info, geojson];
 
 }
 
@@ -211,10 +208,47 @@ function create_map({polygon_asic}){
 		type:'osm'
 	}).addTo(map);
 
-    add_geojson({
+    var config = {
+        'color_feature': selectVarCSS('--primary-color'),
+        'color_highlightFeature': selectVarCSS('--primary-color')
+    }
+
+    var [info, geojson] = create_config_geojson({
         'map': map,
-        'polygon_asic': polygon_asic
+        'polygon_asic': polygon_asic,
+        'config': config
     });
+
+    info.addTo(map);
+    geojson.addTo(map);
+
+    selectElement('#btn_config_asic').addEventListener('input', (e) => {
+        var checked_btn = e.target.checked;
+        var basemap = e.target.dataset.map;
+
+        geojson.clearLayers();
+        map.removeControl(info);
+
+        if(basemap == 'osm'){
+            config.color_feature = selectVarCSS('--primary-color');
+
+            if(checked_btn){
+                config.color_highlightFeature = selectVarCSS('--fourth-color');
+            }else{
+                config.color_highlightFeature = selectVarCSS('--primary-color');
+            }
+        }
+
+        [info, geojson] = create_config_geojson({
+            'map': map,
+            'polygon_asic': polygon_asic,
+            'config': config
+        });
+    
+        info.addTo(map);
+        geojson.addTo(map);
+
+    }, false);
 }
 
 function start(){
