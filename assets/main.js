@@ -123,7 +123,7 @@ function create_config_geojson({map, polygon_asic, config}){
 		this._div.innerHTML = html;
 	}
 
-	function style(feature) {
+	function style(feature){
 		return {
 			weight: 2,
 			opacity: 1,
@@ -133,7 +133,7 @@ function create_config_geojson({map, polygon_asic, config}){
 		};
 	}
 
-	function highlightFeature(e) {
+	function highlightFeature(e){
 		var layer = e.target;
 
 		layer.setStyle({
@@ -146,12 +146,12 @@ function create_config_geojson({map, polygon_asic, config}){
 		info.update(layer.feature.properties);
 	};
 
-	function resetHighlight(e) {
+	function resetHighlight(e){
 		geojson.resetStyle(e.target);
 		info.update();
 	}
 
-	function zoomToFeature(e) {
+	function zoomToFeature(e){
 		map.fitBounds(e.target.getBounds());
 
         var cod_asic = e.target.feature.properties.cod_asic;
@@ -207,7 +207,7 @@ function create_map({polygon_asic}){
         }
     });
 
-    L.topoJson = function (data, options) {
+    L.topoJson = function (data, options){
         return new L.TopoJSON(data, options);
     };
 
