@@ -352,6 +352,7 @@ div.info{
     max-width: 400px;
     padding: .5rem;
     border-radius: .5rem;
+    opacity: .8;
 }
 
 .info.background_primary{
