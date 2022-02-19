@@ -53,10 +53,7 @@ nav a{
     color: var(--secondary-color);
     font-size: 1.2rem;
     font-family: var(--font-body);
-}
-
-.menu_items ul li a b{
-    cursor: default;
+    cursor: pointer;
 }
 
 #map{
@@ -69,7 +66,6 @@ nav a{
     background-color: var(--primary-color);
     color: var(--secondary-color);
     width: 100vw;
-    max-width: 400px;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -98,7 +94,8 @@ nav a{
 .geolocation,
 .config_asic,
 .legend,
-.information{
+.information,
+.info_response{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -352,7 +349,7 @@ div.info{
     max-width: 400px;
     padding: .5rem;
     border-radius: .5rem;
-    opacity: .8;
+    opacity: .7;
 }
 
 .info.background_primary{
@@ -390,13 +387,98 @@ div.info{
     font-family: var(--font-body);
 }
 
-@media (max-width: 576px){
+.info_response .body{
+    overflow-y: scroll;
+}
+
+.table_response{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table_response caption{
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: var(--font-header);
+}
+
+.table_response tr{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: .5rem;
+    margin: 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.table_response td{
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.table_response tr:last-child{
+    margin-bottom: 2rem;
+}
+
+.preloader_header .header{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+@keyframes fade_in_color_preloader{
+    0% {color: var(--secondary-color);}
+    50% {color: var(--fifth-color)}
+    100% {color: var(--secondary-color);}
+}
+
+@keyframes fade_in_background{
+    0% {background-color: var(--secondary-color);}
+    50% {background-color: var(--fifth-color);}
+    100% {background-color: var(--secondary-color);}
+}
+
+.preloader_header .header i{
+    font-size: 2rem;
+    animation: fade_in_color_preloader 2s infinite;
+}
+
+.preloader_header .header aside{
+    width: 60%;
+    height: 2rem;
+    animation: fade_in_background 2s infinite;
+    border-radius: .3rem;
+}
+
+.preloader_header div:last-child{
+    animation: fade_in_background 2s infinite;
+    width: 85%;
+    height: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    border-radius: .3rem;
+}
+
+.table_response tr.hide{
+    display: none;
+}
+
+@media (max-width: 900px){
     nav{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
         height: var(--heigth-nav);
+    }
+
+    .sidebar{
+        max-width: 25rem;
     }
 
     .menu_items ul{
@@ -440,12 +522,21 @@ div.info{
         height: 3.2rem;
     }
 
+    .table_response tr{
+        display: block;
+    }
+
+    .table_response td{
+        display: block;
+        text-align: right;
+    }
+
 }
 
-@media (min-width: 576px){
+@media (min-width: 900px){
     main{
         width: 100vw;
-        max-width: 1080px;
+        max-width: 1280px;
         margin-left: auto;
         margin-right: auto;
     }
@@ -483,14 +574,28 @@ div.info{
     #burge_icon, #items_legend{
         display: none;
     }
-}
 
-@media ((min-width: 576px) and (max-width: 950px)){
-    .items_content{
-        display: none;
+    .sidebar{
+        max-width: 500px;
     }
-    
-    .menu_items ul li:hover a b.items_content{
-        display: inline;
+
+    .table_response{
+        border-collapse: separate;
+        border-spacing: 0px 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .table_response td,
+    .table_response th{
+        text-align: left;
+        padding: .5rem;
+    }
+
+    .table_response td{
+        width: 70%;
+    }
+
+    .table_response th{
+        width: 30%;
     }
 }

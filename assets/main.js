@@ -2,19 +2,6 @@ const selectElement = (element) => document.querySelector(element);
 const selectElementAll = (element) => document.querySelectorAll(element);
 const selectVarCSS = (element) => getComputedStyle(document.body).getPropertyValue(element);
 
-function search_class_font_awesome(text){
-    let array_text = text.split(' ');
-    let regex = new RegExp('^fa-');
-    for(var x = 0; x < array_text.length; x++){
-        let value = array_text[x];
-        let validation = regex.test(value);
-        if(validation){
-            return value;
-        }
-
-    }
-}
-
 function close_sidebar(e){
     e.preventDefault();
     var name_sidebar = this.dataset.sidebar;
@@ -29,6 +16,32 @@ function close_sidebar(e){
     wallpaper.classList.remove('wallpaper');
     wallpaper.classList.add('hide');
     
+}
+
+function verify_class_element(element, class_name){
+    return element.classList.contains(class_name);
+}
+
+function restart_menu_burge(){
+    const media_query = '(max-width: 900px)';
+    var font_burge = selectElement('#font_burge'),
+        font_close = selectElement('#font_close'),
+        menu_items = selectElement('.menu_items');
+
+    if(window.matchMedia(media_query)){
+        if(verify_class_element(font_burge, 'hide')){
+            font_burge.classList.remove('hide');
+        }
+
+        if(verify_class_element(font_close, 'hide') == false){
+            font_close.classList.add('hide');
+        }
+        
+        if(verify_class_element(menu_items, 'hide_menu') == false){
+            menu_items.classList.add('hide_menu');
+        }
+        
+    }
 }
 
 function open_sidebar(e){
@@ -49,9 +62,24 @@ function open_sidebar(e){
     sidebar.classList.add(name_sidebar);
     sidebar.classList.remove('hide');
 
+    restart_menu_burge();
+
     setTimeout(() => {
         btn.removeAttribute('disable');
     }, 1000);
+}
+
+function search_class_font_awesome(text){
+    let array_text = text.split(' ');
+    let regex = new RegExp('^fa-');
+    for(var x = 0; x < array_text.length; x++){
+        let value = array_text[x];
+        let validation = regex.test(value);
+        if(validation){
+            return value;
+        }
+
+    }
 }
 
 function state_button(e){
@@ -97,8 +125,40 @@ async function get_data_json(url){
     return data;
 }
 
-function callback_asic(cod_asic){
-    console.log(cod_asic);
+async function callback_asic(cod_asic){
+    var data = new FormData();
+    data.append('cod_asic', cod_asic);
+
+    var sidebar = selectElement('#info_response');
+    var wallpaper = selectElement('#wallpaper');
+
+    wallpaper.classList.remove('hide');
+    wallpaper.classList.add('wallpaper');
+
+    sidebar.classList.add('info_response');
+    sidebar.classList.remove('hide');
+    
+    await fetch('assets/php/consult_asic.php', {
+        method : 'POST',
+        body : data
+    })
+    .then(response => response.json())
+    .then(data => {
+        var preloader_header = selectElement('#preloader_header'),
+            header_response = selectElement('#header_response'),
+            body_response = selectElement('#body_response');
+        if(data.response){
+            preloader_header.classList.remove('preloader_header');
+            preloader_header.classList.add('hide');
+            header_response.classList.remove('hide');
+            header_response.classList.add('header_sidebar');
+            body_response.innerHTML = data.html;
+        }
+        
+    })
+    .catch((error) => {
+        console.log(error.message);
+    });
 }
 
 function create_config_geojson({map, polygon_asic, config}){
@@ -211,12 +271,14 @@ function create_map({polygon_asic}){
         return new L.TopoJSON(data, options);
     };
 
+    /*
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		minZoom: 7,
 		maxZoom: 19,
 		type:'osm'
 	}).addTo(map);
+    */
 
     var config = {
         'color_feature': selectVarCSS('--primary-color'),
@@ -282,6 +344,21 @@ function start(){
     selectElementAll('.open_sidebar').forEach((element) => {
         element.addEventListener('click', open_sidebar, false);
     });
+
+    selectElement('#close_info_response').addEventListener('click', (e) => {
+        var preloader_header = selectElement('#preloader_header'),
+            header_response = selectElement('#header_response'),
+            body_response = selectElement('#body_response');
+
+            preloader_header.classList.remove('hide');
+            preloader_header.classList.add('preloader_header');
+
+            header_response.classList.remove('header_sidebar');
+            header_response.classList.add('hide');
+            
+            body_response.innerHTML = '';
+        
+    }, false);
 
     selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
 
