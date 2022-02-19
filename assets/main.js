@@ -143,15 +143,24 @@ async function callback_asic(cod_asic){
     var data = new FormData();
     data.append('cod_asic', cod_asic);
 
-    var sidebar = selectElement('#info_response');
-    var wallpaper = selectElement('#wallpaper');
+    selectElement('#screen').style['animation-name'] = 'fade_in_screen';
 
-    wallpaper.classList.remove('hide');
-    wallpaper.classList.add('wallpaper');
+    setTimeout(() => {
+        var sidebar = selectElement('#info_response');
+        var wallpaper = selectElement('#wallpaper');
 
-    sidebar.classList.add('info_response');
-    sidebar.classList.remove('hide');
-    
+        wallpaper.classList.remove('hide');
+        wallpaper.classList.add('wallpaper');
+
+        sidebar.classList.add('info_response');
+        sidebar.classList.remove('hide');
+
+    }, 1000);
+
+    setTimeout(() => {
+        selectElement('#screen').style['animation-name'] = '';
+    }, 2100);
+
     await fetch('assets/php/consult_asic.php', {
         method : 'POST',
         body : data
@@ -173,6 +182,7 @@ async function callback_asic(cod_asic){
     .catch((error) => {
         console.log(error.message);
     });
+
 }
 
 function create_config_geojson({map, polygon_asic, config}){
@@ -360,7 +370,9 @@ function start(){
     });
 
     selectElement('#close_info_response').addEventListener('click', (e) => {
-        var preloader_header = selectElement('#preloader_header'),
+        
+        setTimeout(() => {
+            var preloader_header = selectElement('#preloader_header'),
             header_response = selectElement('#header_response'),
             body_response = selectElement('#body_response');
 
@@ -371,7 +383,8 @@ function start(){
             header_response.classList.add('hide');
             
             body_response.innerHTML = '';
-        
+        }, 2100);
+
     }, false);
 
     selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
