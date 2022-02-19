@@ -8,13 +8,21 @@ function close_sidebar(e){
     var id_sidebar = '#' + name_sidebar;
     var sidebar = selectElement(id_sidebar);
 
-    sidebar.classList.remove(name_sidebar);
-    sidebar.classList.add('hide');
-
     var wallpaper = selectElement('#wallpaper');
 
-    wallpaper.classList.remove('wallpaper');
-    wallpaper.classList.add('hide');
+    selectElement('#screen').style['animation-name'] = 'fade_in_screen';
+
+    setTimeout(() => {
+        sidebar.classList.remove(name_sidebar);
+        sidebar.classList.add('hide');
+
+        wallpaper.classList.remove('wallpaper');
+        wallpaper.classList.add('hide');
+    }, 1000);
+
+    setTimeout(() => {
+        selectElement('#screen').style['animation-name'] = '';
+    }, 2100);
     
 }
 
@@ -60,13 +68,19 @@ function open_sidebar(e){
     wallpaper.classList.add('wallpaper');
 
     sidebar.classList.add(name_sidebar);
-    sidebar.classList.remove('hide');
+
+    selectElement('#screen').style['animation-name'] = 'fade_in_screen';
 
     restart_menu_burge();
 
     setTimeout(() => {
         btn.removeAttribute('disable');
+        sidebar.classList.remove('hide');
     }, 1000);
+
+    setTimeout(() => {
+        selectElement('#screen').style['animation-name'] = '';
+    }, 2100);
 }
 
 function search_class_font_awesome(text){

@@ -60,6 +60,25 @@ nav a{
     height: calc(100vh - var(--heigth-nav));
 }
 
+@keyframes fade_in_screen{
+    0% {height: 0vh;}
+    50% {height: 150vh;}
+    100% {height: 0vh;}
+}
+
+#screen{
+    background-color: var(--fourth-color);
+    position: fixed;
+    z-index: 1200;
+    top: -280px;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    transform: skewY(-10deg);
+    transition: all 0.45s;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+}
 
 /*max value z-index in css leaflet is 1000*/
 .sidebar{
@@ -477,7 +496,7 @@ div.info{
         height: var(--heigth-nav);
     }
 
-    .sidebar{
+    .sidebar, #screen{
         max-width: 25rem;
     }
 
@@ -575,8 +594,8 @@ div.info{
         display: none;
     }
 
-    .sidebar{
-        max-width: 500px;
+    .sidebar, #screen{
+        max-width: 30rem;
     }
 
     .table_response{
