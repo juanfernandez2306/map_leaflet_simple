@@ -139,6 +139,12 @@ async function get_data_json(url){
     return data;
 }
 
+async function get_data_img(url){
+    let response = await fetch(url);
+    let blob = await response.blob();
+    return URL.createObjectURL(blob);
+}
+
 async function callback_asic(cod_asic){
     var data = new FormData();
     data.append('cod_asic', cod_asic);
@@ -183,6 +189,45 @@ async function callback_asic(cod_asic){
         console.log(error.message);
     });
 
+}
+
+function create_legend(array_img){
+    var legend = L.control({
+        position : 'bottomright'
+    });
+    
+    var html = `
+        <div class="title">
+            <h3>
+                <i class="fas fa-list"></i>
+                Leyenda
+            </h3>
+        </div>
+        <div class="items">
+            <img src="${array_img[0]}" alt="hospital">
+            <b>Hospital</b>
+        </div>
+        <div class="items">
+            <img src="${array_img[1]}" alt="cdi">
+            <b>Centro de Diágnostico Integral Comunitario</b>
+        </div>
+        <div class="items">
+            <img src="${array_img[2]}" alt="raes">
+            <b>Ambulatorio de la Red Especializada</b>
+        </div>
+        <div class="items">
+            <img src="${array_img[3]}" alt="racs">
+            <b>Consultorio de la Red Comunal</b>
+        </div>
+    `;
+
+    legend.onAdd = function(e){
+        this._div = L.DomUtil.create('div', 'map_legend');
+        this._div.innerHTML = html;
+        return this._div;
+    }
+
+    return legend;
 }
 
 function create_config_geojson({map, polygon_asic, config}){
@@ -263,7 +308,7 @@ function create_config_geojson({map, polygon_asic, config}){
 
 }
 
-function create_map({polygon_asic}){
+function create_map({polygon_asic, array_img}){
     const initial_coordinates = [10.90847, -72.08446];
 
     var map = L.map('map', {
@@ -351,6 +396,38 @@ function create_map({polygon_asic}){
         geojson.addTo(map);
 
     }, false);
+
+    var legend = null;
+
+    var media_query = '(min-width: 900px)';
+
+    if(window.matchMedia(media_query).matches){
+        legend = create_legend(array_img);
+        legend.addTo(map);
+    }
+
+    window.addEventListener('resize', (e) =>{
+        if(legend != null){
+            map.removeControl(legend);
+            legend = null;
+        }
+
+        if(window.matchMedia(media_query).matches){
+            legend = create_legend(array_img);
+            legend.addTo(map);
+        }
+
+    }, false);
+
+    
+}
+
+function load_svg_legend(array_img){
+    var items_img = selectElementAll('.items img');
+
+    items_img.forEach((element, index, array) => {
+        element.src = array_img[index];
+    });
 }
 
 function start(){
@@ -390,11 +467,26 @@ function start(){
     selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
 
     Promise.all([
-        get_data_json('assets/polygon_asic.topojson')
+        get_data_json('assets/polygon_asic.topojson'),
+        get_data_img('assets/svg/hospital.svg'),
+        get_data_img('assets/svg/cdi.svg'),
+        get_data_img('assets/svg/raes.svg'),
+        get_data_img('assets/svg/racs.svg')
     ])
     .then(array_response => {
+        var polygon = array_response[0];
+            array_img = [
+                array_response[1],
+                array_response[2],
+                array_response[3],
+                array_response[4]
+            ]
+
+        load_svg_legend(array_img);
+
         create_map({
-            'polygon_asic': array_response[0]
+            'polygon_asic': polygon,
+            'array_img' : array_img
         })
     })
     .catch((error) => {
