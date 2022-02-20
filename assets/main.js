@@ -308,7 +308,32 @@ function create_config_geojson({map, polygon_asic, config}){
 
 }
 
-function create_map({polygon_asic, array_img}){
+function create_geojson_point(array_data_point){
+    let geojson = {
+        type : 'FeatureCollection',
+        features : []
+    };
+
+    array_data_point.forEach((element) => {
+        geojson.features.push(
+            {
+                type : 'Feature',
+                geometry : {
+                    type : 'Point',
+                    coordinates: [element[2], element[3]]
+                },
+                properties: {
+                    id_estab: element[0],
+                    id_tipo: element[1]
+                }
+            }
+        )
+    });
+
+    return geojson;
+}
+
+function create_map({polygon_asic, array_img, geojson_point}){
     const initial_coordinates = [10.90847, -72.08446];
 
     var map = L.map('map', {
@@ -419,6 +444,11 @@ function create_map({polygon_asic, array_img}){
 
     }, false);
 
+
+    let geojson_point_map = L.geoJson(geojson_point);
+
+    geojson_point_map.addTo(map);
+
     
 }
 
@@ -471,7 +501,8 @@ function start(){
         get_data_img('assets/svg/hospital.svg'),
         get_data_img('assets/svg/cdi.svg'),
         get_data_img('assets/svg/raes.svg'),
-        get_data_img('assets/svg/racs.svg')
+        get_data_img('assets/svg/racs.svg'),
+        get_data_json('assets/php/consult_establishment_health.php')
     ])
     .then(array_response => {
         var polygon = array_response[0];
@@ -480,13 +511,17 @@ function start(){
                 array_response[2],
                 array_response[3],
                 array_response[4]
-            ]
+            ],
+            data_point = array_response[5].data;
 
         load_svg_legend(array_img);
 
+        let geojson_point = create_geojson_point(data_point);
+
         create_map({
             'polygon_asic': polygon,
-            'array_img' : array_img
+            'array_img' : array_img,
+            'geojson_point': geojson_point
         })
     })
     .catch((error) => {
