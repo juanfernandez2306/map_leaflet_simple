@@ -333,6 +333,29 @@ function create_geojson_point(array_data_point){
     return geojson;
 }
 
+function filter_layer_geojson_point(layer_geojson, id_tipo, array_img, icon_size = 30){
+    return L.geoJson(layer_geojson, {
+        filter: function(feature, layer){
+            return feature.properties.id_tipo == id_tipo
+        },
+
+        pointToLayer: function(feature, latlng){
+            return icon = L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: array_img[id_tipo - 1],
+                    iconSize: [icon_size, icon_size]
+                })
+            });
+        },
+        
+        onEachFeature: function(feature, layer){
+            layer.on('click', function(e){
+                var id_estab = e.target.feature.properties.id_estab;
+            })
+        }
+    });
+}
+
 function create_map({polygon_asic, array_img, geojson_point}){
     const initial_coordinates = [10.90847, -72.08446];
 
@@ -445,11 +468,9 @@ function create_map({polygon_asic, array_img, geojson_point}){
     }, false);
 
 
-    let geojson_point_map = L.geoJson(geojson_point);
+    let point_hospital = filter_layer_geojson_point(geojson_point, 2, array_img);
 
-    geojson_point_map.addTo(map);
-
-    
+    point_hospital.addTo(map);
 }
 
 function load_svg_legend(array_img){
