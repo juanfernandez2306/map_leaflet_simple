@@ -468,9 +468,31 @@ function create_map({polygon_asic, array_img, geojson_point}){
     }, false);
 
 
-    let point_hospital = filter_layer_geojson_point(geojson_point, 2, array_img);
+    let point_hospital = filter_layer_geojson_point(geojson_point, 1, array_img, 35),
+        point_cdi = filter_layer_geojson_point(geojson_point, 2, array_img),
+        point_amb = filter_layer_geojson_point(geojson_point, 3, array_img),
+        point_cmp = filter_layer_geojson_point(geojson_point, 4, array_img);
 
-    point_hospital.addTo(map);
+    let parentGroup = L.markerClusterGroup(),
+		subGroup_hospitales = L.featureGroup.subGroup(parentGroup, [point_hospital]),
+        subGroup_cdi = L.featureGroup.subGroup(parentGroup, [point_cdi]),
+        subGroup_amb = L.featureGroup.subGroup(parentGroup, [point_amb]),
+        subGroup_cmp = L.featureGroup.subGroup(parentGroup, [point_cmp]);
+
+    let control = L.control.layers(null, null, {
+        collapsed: true,  
+        position: 'topright'
+    }).addTo(map);
+            
+    control.addOverlay(subGroup_hospitales, 'HOSPITALES');
+    control.addOverlay(subGroup_cdi, 'CDI');
+    control.addOverlay(subGroup_amb, 'AMBULATORIOS RED ESPECIALIZADA');
+    control.addOverlay(subGroup_cmp, 'CONSULTORIOS RED COMUNAL')
+    parentGroup.addTo(map);
+    subGroup_hospitales.addTo(map);
+    subGroup_cdi.addTo(map);
+    subGroup_amb.addTo(map);
+    subGroup_cmp.addTo(map);
 }
 
 function load_svg_legend(array_img){
