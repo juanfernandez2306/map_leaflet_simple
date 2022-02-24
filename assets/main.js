@@ -2,6 +2,8 @@ const selectElement = (element) => document.querySelector(element);
 const selectElementAll = (element) => document.querySelectorAll(element);
 const selectVarCSS = (element) => getComputedStyle(document.body).getPropertyValue(element);
 
+const url_consult_asic = 'assets/php/consult_asic.php';
+
 function close_sidebar(e){
     e.preventDefault();
     var name_sidebar = this.dataset.sidebar;
@@ -145,9 +147,9 @@ async function get_data_img(url){
     return URL.createObjectURL(blob);
 }
 
-async function callback_asic(cod_asic){
+async function callback_response({cod_number, name_field, url}){
     var data = new FormData();
-    data.append('cod_asic', cod_asic);
+    data.append(name_field, cod_number);
 
     selectElement('#screen').style['animation-name'] = 'fade_in_screen';
 
@@ -167,7 +169,7 @@ async function callback_asic(cod_asic){
         selectElement('#screen').style['animation-name'] = '';
     }, 2100);
 
-    await fetch('assets/php/consult_asic.php', {
+    await fetch(url, {
         method : 'POST',
         body : data
     })
@@ -286,7 +288,10 @@ function create_config_geojson({map, polygon_asic, config}){
         var cod_asic = e.target.feature.properties.cod_asic;
 
         if(config.callback instanceof Function){
-            config.callback(cod_asic);
+            config.callback({
+                cod_number: cod_asic, 
+                name_field: 'cod_asic', 
+                url: url_consult_asic});
         }
 
 	}
@@ -426,7 +431,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
             if(checked_btn){
                 config.color_highlightFeature = selectVarCSS('--fourth-color');
                 config.fillOpacity_highlightFeature = 0.5;
-                config.callback = callback_asic;
+                config.callback = callback_response;
             }else{
                 config.color_highlightFeature = selectVarCSS('--primary-color');
                 config.fillOpacity_highlightFeature = 0.2;
@@ -481,7 +486,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
 
     let control = L.control.layers(null, null, {
         collapsed: true,  
-        position: 'topright'
+        position: 'topleft'
     }).addTo(map);
             
     control.addOverlay(subGroup_hospitales, 'HOSPITALES');
