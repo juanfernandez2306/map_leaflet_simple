@@ -3,6 +3,7 @@ const selectElementAll = (element) => document.querySelectorAll(element);
 const selectVarCSS = (element) => getComputedStyle(document.body).getPropertyValue(element);
 
 const url_consult_asic = 'assets/php/consult_asic.php';
+const url_consult_code_establishment_health = 'assets/php/consult_code_establishment_health.php';
 
 function close_sidebar(e){
     e.preventDefault();
@@ -184,6 +185,26 @@ async function callback_response({cod_number, name_field, url}){
             header_response.classList.remove('hide');
             header_response.classList.add('header_sidebar');
             body_response.innerHTML = data.html;
+
+            if(name_field == 'id_estab'){
+                if(data.url_photo != null){
+                    get_data_img(data.url_photo)
+                    .then(response_img =>{
+                        var preload_img = selectElement('#preload_img'),
+                            img = document.createElement('img');
+
+                        img.src = response_img;
+
+                        preload_img.innerHTML = '';
+                        preload_img.appendChild(img);
+                        
+                    })
+                    .catch(error => {
+                        console.log(error.message);
+                    });
+                }
+            }
+
         }
         
     })
@@ -356,6 +377,13 @@ function filter_layer_geojson_point(layer_geojson, id_tipo, array_img, icon_size
         onEachFeature: function(feature, layer){
             layer.on('click', function(e){
                 var id_estab = e.target.feature.properties.id_estab;
+
+                callback_response({
+                    cod_number: id_estab, 
+                    name_field: 'id_estab', 
+                    url: url_consult_code_establishment_health
+                });
+
             })
         }
     });
@@ -550,7 +578,7 @@ function start(){
         get_data_img('assets/svg/cdi.svg'),
         get_data_img('assets/svg/raes.svg'),
         get_data_img('assets/svg/racs.svg'),
-        get_data_json('assets/php/consult_establishment_health.php')
+        get_data_json('assets/php/consult_create_array_establishment_health.php')
     ])
     .then(array_response => {
         var polygon = array_response[0];

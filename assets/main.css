@@ -534,6 +534,31 @@ div.map_legend .items b{
     font-weight: 700;
 }
 
+#preload_img div{
+    width: 19rem;
+    max-width: 90%;
+    height: 13rem;
+    animation: fade_in_background 2s infinite;
+    border-radius: .3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+#preload_img img{
+    border-radius: .3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+#preload_img .hide{
+    display: none;
+}
+
 @media (pointer: coarse){
     .legend .items b{
         margin-left: 1rem;
