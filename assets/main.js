@@ -1,7 +1,17 @@
+/**
+    @function
+    @param {string} element - name selector html
+    @returns {objects} Element DOM
+ */
 const selectElement = (element) => document.querySelector(element);
 const selectElementAll = (element) => document.querySelectorAll(element);
 const selectVarCSS = (element) => getComputedStyle(document.body).getPropertyValue(element);
 
+/**
+    @constant
+    @type {string}
+    @default 
+ */
 const url_consult_asic = 'assets/php/consult_asic.php';
 const url_consult_code_establishment_health = 'assets/php/consult_code_establishment_health.php';
 
@@ -148,6 +158,23 @@ async function get_data_img(url){
     return URL.createObjectURL(blob);
 }
 
+function load_img_establishment(url){
+    get_data_img(url)
+    .then(response_img =>{
+        var preload_img = selectElement('#preload_img'),
+            img = document.createElement('img');
+
+        img.src = response_img;
+
+        preload_img.innerHTML = '';
+        preload_img.appendChild(img);
+        
+    })
+    .catch(error => {
+        console.log(error.message);
+    });
+}
+
 async function callback_response({cod_number, name_field, url}){
     var data = new FormData();
     data.append(name_field, cod_number);
@@ -188,20 +215,7 @@ async function callback_response({cod_number, name_field, url}){
 
             if(name_field == 'id_estab'){
                 if(data.url_photo != null){
-                    get_data_img(data.url_photo)
-                    .then(response_img =>{
-                        var preload_img = selectElement('#preload_img'),
-                            img = document.createElement('img');
-
-                        img.src = response_img;
-
-                        preload_img.innerHTML = '';
-                        preload_img.appendChild(img);
-                        
-                    })
-                    .catch(error => {
-                        console.log(error.message);
-                    });
+                    load_img_establishment(data.url_photo);
                 }
             }
 
