@@ -15,6 +15,11 @@ const selectVarCSS = (element) => getComputedStyle(document.body).getPropertyVal
 const url_consult_asic = 'assets/php/consult_asic.php';
 const url_consult_code_establishment_health = 'assets/php/consult_code_establishment_health.php';
 
+/**
+    Element HTML contains Class close_sidebar 
+    is required attribute data-sidebar
+    @param {string} dataset - name ID Element 
+ */
 function close_sidebar(e){
     e.preventDefault();
     var name_sidebar = this.dataset.sidebar;
@@ -39,6 +44,12 @@ function close_sidebar(e){
     
 }
 
+/**
+    ckeck if it contains class name
+    @param {Element} element - Element HTML
+    @param {string} class_name - name class
+    @returns {boolean}
+ */
 function verify_class_element(element, class_name){
     return element.classList.contains(class_name);
 }
@@ -64,6 +75,12 @@ function restart_menu_burge(){
         
     }
 }
+
+/**
+    Element HTML list menu nav 
+    is requerid attribute data-sidebar
+    @param {string} dataset - name ID Element
+*/
 
 function open_sidebar(e){
     e.preventDefault();
@@ -96,6 +113,10 @@ function open_sidebar(e){
     }, 2100);
 }
 
+/**
+    @param {string} text - text class Element HTML
+    @returns {string} - name class fontawesome
+*/
 function search_class_font_awesome(text){
     let array_text = text.split(' ');
     let regex = new RegExp('^fa-');
@@ -109,6 +130,10 @@ function search_class_font_awesome(text){
     }
 }
 
+/**
+    replace icon font awesome
+    and add class fade in
+*/
 function state_button(e){
     e.preventDefault();
     
