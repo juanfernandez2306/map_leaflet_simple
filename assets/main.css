@@ -15,8 +15,8 @@
     --fourth-color: #D885A3;
     --fifth-color: #cececeff;
     --heigth-nav: 3.6rem;
-    --font-header: roboto;
-    --font-body: nunito;
+    --font-header: roboto, Arial, Helvetica, sans-serif;
+    --font-body: nunito, Arial, Helvetica, sans-serif;
 }
 
 body{
@@ -80,6 +80,7 @@ nav a{
     animation-duration: 2s;
 }
 
+/*class sidebar*/
 /*max value z-index in css leaflet is 1000*/
 .sidebar{
     background-color: var(--primary-color);
@@ -90,7 +91,8 @@ nav a{
     top: 0;
     left: 0;
     z-index: 1100;
-    padding-top: 1rem;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 .sidebar .header_sidebar{
@@ -102,6 +104,27 @@ nav a{
     font-family: var(--font-header);
 }
 
+.sidebar .footer_sidebar{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.sidebar .footer_sidebar button{
+    padding: .5rem;
+    margin: 1rem;
+    font-family: var(--font-header);
+    font-size: 1rem;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border-radius: .2rem;
+}
+
+.sidebar .footer_sidebar button:hover{
+    background-color: var(--fourth-color);
+    color: var(--secondary-color);
+}
+
 .sidebar .header_sidebar .btn_close_sidebar:hover{
     color: var(--fourth-color);
 }
@@ -110,7 +133,8 @@ nav a{
     padding-right: .4rem;
 }
 
-.geolocation,
+/*end class sidebar*/
+
 .config_asic,
 .legend,
 .information,
@@ -120,6 +144,7 @@ nav a{
     gap: 1.5rem;
 }
 
+/*
 .geolocation button{
     width: 70%;
     align-self: center;
@@ -130,7 +155,8 @@ nav a{
     border-radius: .4rem;
     background-color: var(--secondary-color);
     color: var(--primary-color);
-}
+}*/
+
 
 .geolocation button.active:hover{
     background-color: var(--fourth-color);

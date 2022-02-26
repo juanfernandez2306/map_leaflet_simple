@@ -78,7 +78,7 @@
         <aside id="screen"></aside>
 
         <aside id="geolocation" class="sidebar hide">
-            <div class="header_sidebar">
+            <section class="header_sidebar">
                 <h3>
                     <i class="fas fa-map"></i>
                     Geolocalización
@@ -86,19 +86,28 @@
                 <a class="btn_close_sidebar" data-sidebar="geolocation">
                     <i class="fas fa-times"></i>
                 </a>
-            </div>
-            <button id="start_geolocation" class="active">
-                <i class="fas fa-home"></i>
-                <b>Iniciar</b>
-            </button>
-            <button id="remove_geolocation" class="active">
-                <i class="fas fa-home"></i>
-                <b>Remover</b>
-            </button>
-            <button id="zoom_geolocation" class="active">
-                <i class="fas fa-home"></i>
-                <b>Zoom</b>
-            </button>
+            </section>
+            <section class="body_sidebar">
+                <button id="start_geolocation" class="active">
+                    <i class="fas fa-home"></i>
+                    <b>Iniciar</b>
+                </button>
+                <button id="remove_geolocation" class="active">
+                    <i class="fas fa-home"></i>
+                    <b>Remover</b>
+                </button>
+                <button id="zoom_geolocation" class="active">
+                    <i class="fas fa-home"></i>
+                    <b>Zoom</b>
+                </button>
+            </section>
+            <section class="footer_sidebar">
+                <button class="btn_close_sidebar" data-sidebar="geolocation">
+                    <i class="fas fa-times"></i>
+                    <b>CERRAR</b>
+                </button>
+            </section>
+            
         </aside>
 
         <aside id="config_asic" class="sidebar hide">
