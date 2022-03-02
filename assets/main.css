@@ -144,6 +144,18 @@ nav a{
 
 /*end class sidebar*/
 
+/*class wallpaper*/
+.wallpaper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1080;
+    background-color: rgba(0, 0, 0, .5);
+}
+/*end class wallpaper*/
+
 /*class geolocation*/
 
 .geolocation .body_sidebar{
@@ -185,31 +197,29 @@ nav a{
 
 /*class config_asic*/
 
-/*end class config_asic*/
-
-.legend,
-.information,
-.info_response{
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.config_asic .body_sidebar div{
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
 }
 
-
-.wallpaper{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1080;
-    background-color: rgba(0, 0, 0, .5);
-}
-
-.config_asic .items{
-    align-self: center;
-    width: 70%;
+.config_asic .body_sidebar div:first-child{
     text-align: center;
+}
+
+.config_asic .body_sidebar div:last-child{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#power_off{
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 2.5rem;
+    background: var(--secondary-color);
+    color: var(--fifth-color);
 }
 
 #config_asic_text{
@@ -218,7 +228,7 @@ nav a{
 }
 
 /* The switch - the box around the slider */
-.config_asic .items .switch{
+.config_asic div .items .switch{
     position: relative;
     display: inline-block;
     width: 5rem;
@@ -226,21 +236,21 @@ nav a{
 }
 
 /* Hide default HTML checkbox */
-.config_asic .items .switch input{
+.config_asic div .items .switch input{
     opacity: 0;
     width: 0;
     height: 0;
 }
 
 /* The slider */
-.config_asic .items .switch .slider{
+.config_asic div .items .switch .slider{
     position: absolute;
     cursor: pointer;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: var(--fifth-color);
+    background-color: var(--secondary-color);
     transition: .4s;
 }
 
@@ -251,29 +261,31 @@ nav a{
     width: 1.8rem;
     left: .3rem;
     bottom: .3rem;
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     transition: .4s;
 }
 
-.config_asic .items .switch input:checked + .slider{
-    background-color: var(--primary-color);
-}
-
-.config_asic .items .switch input:focus + .slider{
-    box-shadow: 0 0 .2rem var(--primary-color);
-}
-
-.config_asic .items .switch input:checked + .slider:before{
+.config_asic div .items .switch input:checked + .slider:before{
     transform: translateX(2.4rem);
 }
 
 /* Rounded sliders */
-.config_asic .items .switch .slider.round{
+.config_asic div .items .switch .slider.round{
     border-radius: 2.15rem;
 }
 
-.config_asic .items .switch .slider.round:before{
+.config_asic div .items .switch .slider.round:before{
     border-radius: 50%;
+}
+
+/*end class config_asic*/
+
+.legend,
+.information,
+.info_response{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .legend .items{
