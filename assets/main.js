@@ -565,6 +565,22 @@ function load_svg_legend(array_img){
     });
 }
 
+function change_status_switch_text(e){
+    var input = e.target,
+        text = selectElement('#config_asic_text p b'),
+        icon = selectElement('#config_asic_text p i');
+
+    if(input.checked){
+        text.innerHTML = 'activada';
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-check');
+    }else{
+        text.innerHTML = 'desactivada';
+        icon.classList.remove('fa-check');
+        icon.classList.add('fa-times');
+    }
+}
+
 function start(){
 
     selectElement('#burge_icon').addEventListener('click', state_menu_burge, false);
@@ -572,6 +588,8 @@ function start(){
     selectElement('#start_geolocation').addEventListener('click', state_button, false);
     selectElement('#remove_geolocation').addEventListener('click', state_button, false);
     selectElement('#zoom_geolocation').addEventListener('click', state_button, false);
+
+    selectElement('#toggle').addEventListener('input', change_status_switch_text, false);
 
     selectElementAll('.btn_close_sidebar').forEach((element) =>{
         element.addEventListener('click', close_sidebar, false);

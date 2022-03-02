@@ -204,6 +204,7 @@ nav a{
 
 .config_asic .body_sidebar div:first-child{
     text-align: center;
+    width: 80%;
 }
 
 #config_asic_text{
