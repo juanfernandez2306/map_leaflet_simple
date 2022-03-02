@@ -289,53 +289,47 @@ nav a{
 }
 /*end class legend*/
 
-.information,
-.info_response{
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
+/*class information*/
 
-.information .body{
+.information .body_sidebar{
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
 }
 
-.information .body .items{
+.information .body_sidebar .items{
     align-self: center;
-    width: 70%;
+    width: 90%;
 }
 
-.information .body .items p{
+.information .body_sidebar .items p{
     text-align: justify;
     font-size: 1rem;
     font-family: var(--font-body);
 }
 
-.information .body .items p a{
+.information .body_sidebar .items p a{
     text-decoration: none;
     color: var(--secondary-color);
     font-weight: 700;
 }
 
-.information .body .items p a:hover{
+.information .body_sidebar .items p a:hover{
     color: var(--fourth-color);
 }
 
-.information .body aside{
+.information .body_sidebar aside{
     align-self: center;
-    width: 90%;
     max-height: 80vh;
     border: .2rem solid var(--fifth-color);
 }
 
-.information .body aside ul{
+.information .body_sidebar aside ul{
     list-style: none;
     padding: 0px .8rem;
 }
 
-.information .body aside ul li{
+.information .body_sidebar aside ul li{
     padding: .5rem;
     text-align: justify;
     font-size: 1rem;
@@ -347,25 +341,25 @@ nav a{
     border-right: .15rem solid var(--fifth-color);
 }
 
-.information .body aside ul li:first-child{
+.information .body_sidebar aside ul li:first-child{
     border-top: .15rem solid var(--fifth-color);
 }
 
-.information .body aside ul li:last-child{
+.information .body_sidebar aside ul li:last-child{
     border-bottom: .15rem solid var(--fifth-color);
 }
 
-.information .body aside ul li a{
-    text-decoration: none;
+.information .body_sidebar aside ul li a{
+    text-decoration: underline;
     color: var(--secondary-color);
 }
 
-.information .body aside ul li a:hover{
+.information .body_sidebar aside ul li a:hover{
     color: var(--fourth-color);
     font-weight: 700;
 }
 
-.information .body footer{
+.information .body_sidebar footer{
     margin-top: 1.5rem;
     margin-bottom: 2.5rem;
     display: flex;
@@ -374,23 +368,33 @@ nav a{
     align-items: center;
 }
 
-.information .body footer div span{
+.information .body_sidebar footer div span{
     font-family: var(--font-body);
 }
 
-.information .body footer div a:first-child{
+.information .body_sidebar footer div a:first-child{
     margin-right: .5rem;
 }
 
-.information .body footer div a{
+.information .body_sidebar footer div a{
     text-decoration: none;
     color: var(--secondary-color);
     font-size: 1.5rem;
 }
 
-.information .body footer div a:hover{
+.information .body_sidebar footer div a:hover{
     color: var(--fourth-color);
 }
+
+/*end class information*/
+
+.info_response{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
 
 .hide{
     display: none;
