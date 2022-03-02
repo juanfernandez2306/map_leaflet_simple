@@ -261,9 +261,8 @@ nav a{
 
 /*end class config_asic*/
 
-.legend,
-.information,
-.info_response{
+/*class legend*/
+.legend .body_sidebar{
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -287,6 +286,14 @@ nav a{
     font-weight: normal;
     font-size: 1.2rem;
     font-family: var(--font-body);
+}
+/*end class legend*/
+
+.information,
+.info_response{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .information .body{
