@@ -200,7 +200,6 @@ nav a{
 .config_asic .body_sidebar div{
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
 }
 
 .config_asic .body_sidebar div:first-child{
@@ -210,6 +209,12 @@ nav a{
 #config_asic_text{
     font-size: 1.2rem;
     font-family: var(--font-body);
+}
+
+.switch{
+    display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .switch input[type="checkbox"]{
