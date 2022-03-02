@@ -102,12 +102,16 @@ nav a{
     align-items: center;
     font-size: 1.2rem;
     font-family: var(--font-header);
+    margin-left: .5rem;
+    margin-right: .5rem;
 }
 
 .sidebar .footer_sidebar{
     display: flex;
     flex-direction: row;
     justify-content: right;
+    margin-left: .5rem;
+    margin-right: .5rem;
 }
 
 .sidebar .footer_sidebar button{
@@ -133,7 +137,53 @@ nav a{
     padding-right: .4rem;
 }
 
+.sidebar .body_sidebar{
+    margin-left: .5rem;
+    margin-right: .5rem;
+}
+
 /*end class sidebar*/
+
+/*class geolocation*/
+
+.geolocation .body_sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.geolocation .body_sidebar button{
+    width: 70%;
+    align-self: center;
+    font-size: 1rem;
+    font-family: var(--font-body);
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    border-radius: .4rem;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.geolocation .body_sidebar button.active:hover{
+    background-color: var(--fourth-color);
+    color: var(--secondary-color);
+}
+
+.geolocation .body_sidebar button.active:hover b{
+    font-weight: 700;
+}
+
+.geolocation .body_sidebar button:disabled{
+    background-color: var(--fifth-color);
+}
+
+.geolocation .body_sidebar button b{
+    font-weight: normal;
+}
+
+/*en class geolocation*/
+
+
 
 .config_asic,
 .legend,
@@ -144,35 +194,6 @@ nav a{
     gap: 1.5rem;
 }
 
-/*
-.geolocation button{
-    width: 70%;
-    align-self: center;
-    font-size: 1.2rem;
-    font-family: var(--font-body);
-    padding-top: .7rem;
-    padding-bottom: .7rem;
-    border-radius: .4rem;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-}*/
-
-
-.geolocation button.active:hover{
-    background-color: var(--fourth-color);
-    color: var(--secondary-color);
-    border-style: none;
-    font-weight: 700;
-    box-shadow: .2rem .2rem .3rem .2rem;
-}
-
-.geolocation button:disabled{
-    background-color: var(--fifth-color);
-}
-
-button b{
-    font-weight: normal;
-}
 
 .wallpaper{
     position: fixed;
