@@ -181,11 +181,12 @@ nav a{
     font-weight: normal;
 }
 
-/*en class geolocation*/
+/*end class geolocation*/
 
+/*class config_asic*/
 
+/*end class config_asic*/
 
-.config_asic,
 .legend,
 .information,
 .info_response{
@@ -209,12 +210,6 @@ nav a{
     align-self: center;
     width: 70%;
     text-align: center;
-}
-
-
-.sidebar_checked{
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
 }
 
 #config_asic_text{

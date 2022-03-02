@@ -111,7 +111,7 @@
         </aside>
 
         <aside id="config_asic" class="sidebar hide">
-            <div class="header_sidebar">
+            <section class="header_sidebar">
                 <h3>
                     <i class="fas fa-exchange-alt"></i>
                     Configuración capa ASIC
@@ -119,16 +119,25 @@
                 <a class="btn_close_sidebar" data-sidebar="config_asic">
                     <i class="fas fa-times"></i>
                 </a>
-            </div>
-            <div id="config_asic_text" class="items">
-                <p>¿Confirme si  desea <b id="config_asic_element_b">activar</b> la consulta de la capa ASIC?</p>
-            </div>
-            <div class="items checkbox">
-                <label class="switch">
-                    <input id="btn_config_asic" type="checkbox" data-map="osm">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+            </section>
+            <section class="body_sidebar">
+                <div id="config_asic_text" class="items">
+                    <p>¿Confirme si  desea <b id="config_asic_element_b">activar</b> la consulta de la capa ASIC?</p>
+                </div>
+
+                <div class="items checkbox">
+                    <label class="switch">
+                        <input id="btn_config_asic" type="checkbox" data-map="osm">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </section>
+            <section class="footer_sidebar">
+                <button class="btn_close_sidebar" data-sidebar="geolocation">
+                    <i class="fas fa-times"></i>
+                    <b>CERRAR</b>
+                </button>
+            </section>
         </aside>
 
         <aside id="legend" class="sidebar hide">

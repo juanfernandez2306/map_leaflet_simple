@@ -158,19 +158,6 @@ function state_menu_burge(e){
     selectElement('.menu_items').classList.toggle('hide_menu');
 }
 
-function state_btn_config_asic(){
-    const sidebar = selectElement('#config_asic');
-    const config_asic_element_b = selectElement('#config_asic_element_b');
-    if(this.checked){
-        sidebar.classList.add('sidebar_checked');
-        config_asic_element_b.innerHTML = 'desactivar'
-    }else{
-        sidebar.classList.remove('sidebar_checked');
-        config_asic_element_b.innerHTML = 'activar';
-    }
-
-}
-
 async function get_data_json(url){
     let response = await fetch(url);
     let data = await response.json();
@@ -485,6 +472,8 @@ function create_map({polygon_asic, array_img, geojson_point}){
     info.addTo(map);
     geojson.addTo(map);
 
+
+    /*
     selectElement('#btn_config_asic').addEventListener('input', (e) => {
         var checked_btn = e.target.checked;
         var basemap = e.target.dataset.map;
@@ -516,6 +505,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
         geojson.addTo(map);
 
     }, false);
+    */
 
     var legend = null;
 
@@ -608,8 +598,6 @@ function start(){
         }, 2100);
 
     }, false);
-
-    selectElement('#btn_config_asic').addEventListener('input', state_btn_config_asic, false);
 
     Promise.all([
         get_data_json('assets/polygon_asic.topojson'),
