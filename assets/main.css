@@ -207,75 +207,50 @@ nav a{
     text-align: center;
 }
 
-.config_asic .body_sidebar div:last-child{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-}
-
-#power_off{
-    height: 2.5rem;
-    width: 2.5rem;
-    border-radius: 2.5rem;
-    background: var(--secondary-color);
-    color: var(--fifth-color);
-}
-
 #config_asic_text{
     font-size: 1.2rem;
     font-family: var(--font-body);
 }
 
-/* The switch - the box around the slider */
-.config_asic div .items .switch{
-    position: relative;
-    display: inline-block;
-    width: 5rem;
-    height: 2.3rem;
+.switch input[type="checkbox"]{
+	visibility: hidden;
 }
 
-/* Hide default HTML checkbox */
-.config_asic div .items .switch input{
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* The slider */
-.config_asic div .items .switch .slider{
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: var(--secondary-color);
-    transition: .4s;
-}
-
-.config_asic .items .switch .slider:before{
-    position: absolute;
-    content: "";
-    height: 1.8rem;
-    width: 1.8rem;
-    left: .3rem;
-    bottom: .3rem;
+.switch input[type="checkbox"]:checked + label{
+    transform: rotate(360deg);
     background-color: var(--primary-color);
-    transition: .4s;
 }
 
-.config_asic div .items .switch input:checked + .slider:before{
-    transform: translateX(2.4rem);
+.switch input[type="checkbox"]:checked + label:before{
+    transform: translateX(90px);
+    background-color: var(--secondary-color);
 }
 
-/* Rounded sliders */
-.config_asic div .items .switch .slider.round{
-    border-radius: 2.15rem;
+.switch label{
+	display: flex;
+	width: 11rem;
+	height: 5rem;
+	border: .4rem solid var(--secondary-color);
+	border-radius: 99em;
+	position: relative;
+	transition: transform .75s ease-in-out;
+	transform-origin: 50% 50%;
+	cursor: pointer;
+    background-color: var(--secondary-color);
 }
 
-.config_asic div .items .switch .slider.round:before{
+.switch label:before{
+    transition: transform .75s ease;
+    transition-delay: .5s;
+    content: "";
+    display: block;
+    position: absolute;
+    width: 3.3rem;
+    height: 3.3rem;
+    background-color: var(--primary-color);
     border-radius: 50%;
+    top: .75rem;
+    left: .75rem;
 }
 
 /*end class config_asic*/

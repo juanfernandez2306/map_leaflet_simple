@@ -599,6 +599,8 @@ function start(){
 
     }, false);
 
+    /*
+
     Promise.all([
         get_data_json('assets/polygon_asic.topojson'),
         get_data_img('assets/svg/hospital.svg'),
@@ -630,7 +632,7 @@ function start(){
     .catch((error) => {
 		console.log(error);
 	})
-
+    */
 }
 
 window.addEventListener('load', start, false);
