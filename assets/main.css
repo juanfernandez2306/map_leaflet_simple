@@ -400,12 +400,12 @@ nav a{
 
 /*class info_response*/
 
-.sidebar .info_response{
-    display: block !important;
-}
-
 #body_response{
     overflow-y: scroll;
+}
+
+.content_response{
+    animation-duration: 1s;
 }
 
 .error_response{
@@ -414,6 +414,7 @@ nav a{
     gap: .5rem;
     justify-content: center;
     align-items: center;
+    animation-duration: 1s;
 }
 
 .error_response h3{
@@ -514,6 +515,7 @@ nav a{
     margin-top: 0;
     margin-bottom: 2rem;
     display: block;
+    animation-duration: 1s;
 }
 
 #preload_img .hide{
@@ -638,6 +640,11 @@ div.map_legend .items b{
     0% {background-color: var(--secondary-color);}
     50% {background-color: var(--fifth-color);}
     100% {background-color: var(--secondary-color);}
+}
+
+@keyframes fade_in_data{
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 
 @media (pointer: coarse){

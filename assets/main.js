@@ -180,6 +180,11 @@ function load_img_establishment(url){
 
         preload_img.innerHTML = '';
         preload_img.appendChild(img);
+        selectElement('#preload_img img').style['animation.name'] = 'fade_in_data';
+
+        setTimeout(() => {
+            selectElement('#preload_img img').style['animation.name'] = '';
+        }, 1100);
         
     })
     .catch(error => {
@@ -222,8 +227,13 @@ async function callback_response({cod_number, name_field, url}){
         if(data.response){
             preloader_header.classList.add('hide');
             content_response.classList.remove('hide');
-            content_response.classList.add('sidebar'); 
+            content_response.classList.add('sidebar');
+            content_response.style['animation-name'] = 'fade_in_data';
             body_response.innerHTML = data.html;
+
+            setTimeout(() => {
+                content_response.style['animation-name'] = '';
+            }, 1100);
 
             if(name_field == 'id_estab' && data.url_photo != null){
                 load_img_establishment(data.url_photo);
