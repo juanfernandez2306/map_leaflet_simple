@@ -399,6 +399,11 @@ nav a{
 /*end icon cloud computing*/
 
 /*class info_response*/
+
+.sidebar .info_response{
+    display: block !important;
+}
+
 #body_response{
     overflow-y: scroll;
 }
@@ -422,22 +427,101 @@ nav a{
 
 /*end class info_response*/
 
+/*table info_response*/
+.table_response{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.table_response caption{
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-family: var(--font-header);
+}
 
-.hide{
+.table_response tr{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: .5rem;
+    margin: 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+.table_response td{
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+.table_response tr.hide{
     display: none;
 }
 
-.fade_in_color{
-    animation: fade_in_color 2s infinite;
+.table_response tr:last-child{
+    margin-bottom: 2rem;
+}
+/*end table info_response*/
+
+/*info response preloader*/
+.preloader_header .header{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-@keyframes fade_in_color{
-    0% {color: var(--secondary-color);}
-    50% {color: var(--primary-color);}
-    100% {color: var(--secondary-color)}
+.preloader_header .header i{
+    font-size: 2rem;
+    animation: fade_in_color_preloader 2s infinite;
 }
 
+.preloader_header .header aside{
+    width: 60%;
+    height: 2rem;
+    animation: fade_in_background 2s infinite;
+    border-radius: .3rem;
+}
+
+.preloader_header div:last-child{
+    animation: fade_in_background 2s infinite;
+    width: 85%;
+    height: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    border-radius: .3rem;
+}
+
+#preload_img div{
+    width: 19rem;
+    max-width: 90%;
+    height: 13rem;
+    animation: fade_in_background 2s infinite;
+    border-radius: .3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 2rem;
+}
+
+#preload_img img{
+    border-radius: .3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    display: block;
+}
+
+#preload_img .hide{
+    display: none;
+}
+/*end info response preloader*/
+
+/*div info map*/
 div.info{
     max-width: 400px;
     padding: .5rem;
@@ -479,88 +563,9 @@ div.info{
     font-weight: 700;
     font-family: var(--font-body);
 }
+/*end div info map*/
 
-.info_response .body{
-    overflow-y: scroll;
-}
-
-.table_response{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.table_response caption{
-    margin-top: 1rem;
-    text-align: center;
-    font-size: 1.2rem;
-    font-family: var(--font-header);
-}
-
-.table_response tr{
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-    padding: .5rem;
-    margin: 1rem;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    text-transform: uppercase;
-}
-
-.table_response td{
-    text-transform: uppercase;
-    font-weight: normal;
-}
-
-.table_response tr:last-child{
-    margin-bottom: 2rem;
-}
-
-.preloader_header .header{
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-@keyframes fade_in_color_preloader{
-    0% {color: var(--secondary-color);}
-    50% {color: var(--fifth-color)}
-    100% {color: var(--secondary-color);}
-}
-
-@keyframes fade_in_background{
-    0% {background-color: var(--secondary-color);}
-    50% {background-color: var(--fifth-color);}
-    100% {background-color: var(--secondary-color);}
-}
-
-.preloader_header .header i{
-    font-size: 2rem;
-    animation: fade_in_color_preloader 2s infinite;
-}
-
-.preloader_header .header aside{
-    width: 60%;
-    height: 2rem;
-    animation: fade_in_background 2s infinite;
-    border-radius: .3rem;
-}
-
-.preloader_header div:last-child{
-    animation: fade_in_background 2s infinite;
-    width: 85%;
-    height: 50vh;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2rem;
-    border-radius: .3rem;
-}
-
-.table_response tr.hide{
-    display: none;
-}
-
+/*div legend map*/
 div.map_legend{
     background-color: var(--primary-color);
     color: var(--secondary-color);
@@ -607,30 +612,32 @@ div.map_legend .items b{
     text-transform: uppercase;
     font-weight: 700;
 }
+/*end div legend map*/
 
-#preload_img div{
-    width: 19rem;
-    max-width: 90%;
-    height: 13rem;
-    animation: fade_in_background 2s infinite;
-    border-radius: .3rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0;
-    margin-bottom: 2rem;
-}
-
-#preload_img img{
-    border-radius: .3rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0;
-    margin-bottom: 2rem;
-    display: block;
-}
-
-#preload_img .hide{
+.hide{
     display: none;
+}
+
+.fade_in_color{
+    animation: fade_in_color 2s infinite;
+}
+
+@keyframes fade_in_color{
+    0% {color: var(--secondary-color);}
+    50% {color: var(--primary-color);}
+    100% {color: var(--secondary-color)}
+}
+
+@keyframes fade_in_color_preloader{
+    0% {color: var(--secondary-color);}
+    50% {color: var(--fifth-color)}
+    100% {color: var(--secondary-color);}
+}
+
+@keyframes fade_in_background{
+    0% {background-color: var(--secondary-color);}
+    50% {background-color: var(--fifth-color);}
+    100% {background-color: var(--secondary-color);}
 }
 
 @media (pointer: coarse){
