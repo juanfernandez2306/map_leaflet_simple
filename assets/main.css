@@ -388,11 +388,39 @@ nav a{
 
 /*end class information*/
 
-.info_response{
+/*icon cloud computing*/
+#cloud_computing{
+    fill: var(--fifth-color);
+}
+
+#cloud_computing path{
+    stroke: var(--secondary-color);
+}
+/*end icon cloud computing*/
+
+/*class info_response*/
+#body_response{
+    overflow-y: scroll;
+}
+
+.error_response{
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: .5rem;
+    justify-content: center;
+    align-items: center;
 }
+
+.error_response h3{
+    width: 80%;
+    font-weight: normal;
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+    text-align: center;
+    margin: .5rem;
+}
+
+/*end class info_response*/
 
 
 

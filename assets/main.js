@@ -216,25 +216,37 @@ async function callback_response({cod_number, name_field, url}){
     .then(response => response.json())
     .then(data => {
         var preloader_header = selectElement('#preloader_header'),
-            header_response = selectElement('#header_response'),
+            content_response = selectElement('#content_response'),
             body_response = selectElement('#body_response');
+        
         if(data.response){
-            preloader_header.classList.remove('preloader_header');
             preloader_header.classList.add('hide');
-            header_response.classList.remove('hide');
-            header_response.classList.add('header_sidebar');
+            content_response.classList.remove('hide');
+            content_response.classList.add('sidebar'); 
             body_response.innerHTML = data.html;
 
-            if(name_field == 'id_estab'){
-                if(data.url_photo != null){
-                    load_img_establishment(data.url_photo);
-                }
+            if(name_field == 'id_estab' && data.url_photo != null){
+                load_img_establishment(data.url_photo);
             }
-
         }
         
     })
     .catch((error) => {
+        var preloader_header = selectElement('#preloader_header'),
+            content_response = selectElement('#content_response'),
+            body_response = selectElement('#body_response');
+
+        preloader_header.classList.add('hide');
+        content_response.classList.remove('hide');
+        content_response.classList.add('sidebar');
+        
+        body_response.innerHTML = `
+        <div class="error_response">
+            <svg><use xlink:href="#cloud_computing"/></svg>
+            <h3>¡Disculpe! Ocurrió un error de conexión con el servidor.</h3>
+            <h3>Verifique su conexión de internet.</h3>
+        </div>
+        `;
         console.log(error.message);
     });
 
@@ -599,23 +611,26 @@ function start(){
         element.addEventListener('click', open_sidebar, false);
     });
 
-    selectElement('#close_info_response').addEventListener('click', (e) => {
-        
-        setTimeout(() => {
-            var preloader_header = selectElement('#preloader_header'),
-            header_response = selectElement('#header_response'),
-            body_response = selectElement('#body_response');
+    
+    selectElementAll('.close_info_response').forEach((items) =>{
 
-            preloader_header.classList.remove('hide');
-            preloader_header.classList.add('preloader_header');
-
-            header_response.classList.remove('header_sidebar');
-            header_response.classList.add('hide');
+        items.addEventListener('click', (e) => {
             
-            body_response.innerHTML = '';
-        }, 2100);
+            setTimeout(() => {
+                var preloader_header = selectElement('#preloader_header'),
+                    content_response = selectElement('#content_response'),
+                    body_response = selectElement('#body_response');
 
-    }, false);
+                content_response.classList.remove('sidebar');
+                content_response.classList.add('hide');
+                body_response.innerHTML = '';
+                preloader_header.classList.remove('hide');
+            }, 2100);
+
+        }, false);
+
+    })
+    
 
     Promise.all([
         get_data_json('assets/polygon_asic.topojson'),
