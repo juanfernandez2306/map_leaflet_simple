@@ -648,6 +648,13 @@ div.map_legend .items b{
 }
 
 @media (pointer: coarse){
+    .information .body_sidebar aside ul li,
+    .information .body_sidebar .items p,
+    .information .body_sidebar footer div span,
+    .body_sidebar{
+        font-size: 1.2rem;
+    }
+
     .legend .items b{
         margin-left: 1rem;
     }
