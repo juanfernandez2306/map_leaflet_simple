@@ -171,8 +171,20 @@ async function get_data_img(url){
 }
 
 function load_img_establishment(url){
+
+    var btn_close_response = selectElementAll('.close_info_response');
+
+    btn_close_response.forEach((element) =>{
+        element.disabled = true;
+    });
+
     get_data_img(url)
     .then(response_img =>{
+
+        btn_close_response.forEach((element) =>{
+            element.removeAttribute('disabled');
+        });
+
         var preload_img = selectElement('#preload_img'),
             img = document.createElement('img');
 
@@ -188,6 +200,21 @@ function load_img_establishment(url){
         
     })
     .catch(error => {
+
+        btn_close_response.forEach((element) =>{
+            element.removeAttribute('disabled');
+        });
+
+        var preload_img = selectElement('#preload_img');
+
+        preload_img.innerHTML = `
+        <div class="error_response">
+            <svg><use xlink:href="#cloud_computing"/></svg>
+            <h3>¡Disculpe! Ocurrió un error de conexión con el servidor.</h3>
+            <h3>Verifique su conexión de internet.</h3>
+        </div>
+        `;
+
         console.log(error.message);
     });
 }
@@ -257,6 +284,7 @@ async function callback_response({cod_number, name_field, url}){
             <h3>Verifique su conexión de internet.</h3>
         </div>
         `;
+
         console.log(error.message);
     });
 
@@ -301,10 +329,11 @@ function create_legend(array_img){
     return legend;
 }
 
-function create_config_geojson({map, polygon_asic, config}){
-    var info = L.control();
+function create_info_map(){
 
-	info.onAdd = function(map){
+    let info = L.control();
+
+    info.onAdd = function(map){
 		this._div = L.DomUtil.create('div', 'info background_primary');
 		this.update();
 		return this._div;
@@ -323,7 +352,12 @@ function create_config_geojson({map, polygon_asic, config}){
 		this._div.innerHTML = html;
 	}
 
-	function style(feature){
+    return info;
+}
+
+function create_polygon_geojson({polygon_asic, config, info, map}){
+
+    function style(feature){
 		return {
 			weight: 2,
 			opacity: 1,
@@ -346,7 +380,7 @@ function create_config_geojson({map, polygon_asic, config}){
 		info.update(layer.feature.properties);
 	};
 
-	function resetHighlight(e){
+    function resetHighlight(e){
 		geojson.resetStyle(e.target);
 		info.update();
 	}
@@ -378,8 +412,7 @@ function create_config_geojson({map, polygon_asic, config}){
         onEachFeature: onEachFeature
     });
 
-	return [info, geojson];
-
+    return geojson;
 }
 
 function create_geojson_point(array_data_point){
@@ -469,65 +502,80 @@ function create_map({polygon_asic, array_img, geojson_point}){
         return new L.TopoJSON(data, options);
     };
 
-    /*
+    
     osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		minZoom: 7,
 		maxZoom: 19,
 		type:'osm'
 	}).addTo(map);
-    */
+    
 
-    var config = {
+    let CONFIG_INTIAL = {
         'color_feature': selectVarCSS('--primary-color'),
         'color_highlightFeature': selectVarCSS('--primary-color'),
         'fillOpacity_highlightFeature': 0.2,
         'callback': null
     }
 
-    var [info, geojson] = create_config_geojson({
-        'map': map,
-        'polygon_asic': polygon_asic,
-        'config': config
-    });
+    let CONFIG_INTIAL_CALLBACK = {
+        'color_feature': selectVarCSS('--primary-color'),
+        'color_highlightFeature': selectVarCSS('--fourth-color'),
+        'fillOpacity_highlightFeature': 0.7,
+        'callback': callback_response
+    }
+
+
+    let info = create_info_map();
 
     info.addTo(map);
-    geojson.addTo(map);
 
+    var layer_polygon_asic = create_polygon_geojson({
+        polygon_asic: polygon_asic,
+        config: CONFIG_INTIAL,
+        info: info,
+        map: map
+    })
 
-    /*
-    selectElement('#btn_config_asic').addEventListener('input', (e) => {
-        var checked_btn = e.target.checked;
-        var basemap = e.target.dataset.map;
+    layer_polygon_asic.addTo(map);
 
-        geojson.clearLayers();
-        map.removeControl(info);
+    selectElement('#toggle').addEventListener('input', (e) => {
+        var element = e.target,
+            name_basemap = element.dataset.basemap;
 
-        if(basemap == 'osm'){
-            config.color_feature = selectVarCSS('--primary-color');
+        element.disabled = true;
 
-            if(checked_btn){
-                config.color_highlightFeature = selectVarCSS('--fourth-color');
-                config.fillOpacity_highlightFeature = 0.5;
-                config.callback = callback_response;
-            }else{
-                config.color_highlightFeature = selectVarCSS('--primary-color');
-                config.fillOpacity_highlightFeature = 0.2;
-                config.callback = null;
-            }
+        setTimeout(() => {
+            element.removeAttribute('disabled');
+        }, 2000);
+
+        if (name_basemap == 'osm'){
+            CONFIG_INTIAL.color_feature = selectVarCSS('--primary-color');
+            CONFIG_INTIAL_CALLBACK.color_feature = selectVarCSS('--primary-color');
+        }else{
+            CONFIG_INTIAL.color_feature = selectVarCSS('--secondary-color');
+            CONFIG_INTIAL_CALLBACK.color_feature = selectVarCSS('--secondary-color');
         }
 
-        [info, geojson] = create_config_geojson({
-            'map': map,
-            'polygon_asic': polygon_asic,
-            'config': config
-        });
-    
-        info.addTo(map);
-        geojson.addTo(map);
+        layer_polygon_asic.clearLayers();
+
+        var config_polygon = {
+            polygon_asic: polygon_asic,
+            config: CONFIG_INTIAL_CALLBACK,
+            info: info,
+            map: map
+        }
+
+        if(element.checked){
+            layer_polygon_asic = create_polygon_geojson(config_polygon);
+        }else{
+            config_polygon.config = CONFIG_INTIAL;
+            layer_polygon_asic = create_polygon_geojson(config_polygon);
+        }
+
+        layer_polygon_asic.addTo(map);
 
     }, false);
-    */
 
     var legend = null;
 
@@ -565,7 +613,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
 
     let control = L.control.layers(null, null, {
         collapsed: true,  
-        position: 'topleft'
+        position: 'topright'
     }).addTo(map);
             
     control.addOverlay(subGroup_hospitales, 'HOSPITALES');
