@@ -470,6 +470,36 @@ function filter_layer_geojson_point(layer_geojson, id_tipo, array_img, icon_size
     });
 }
 
+function create_config_polygon_asic_change({
+    name_basemap,
+    input_checked,
+    config_initial, 
+    config_initial_callback}){
+
+    if (name_basemap == 'osm'){
+        config_initial.color_feature = selectVarCSS('--primary-color');
+        config_initial.color_highlightFeature = selectVarCSS('--primary-color');
+        config_initial.color_feature = selectVarCSS('--primary-color');
+
+        config_initial_callback.color_feature = selectVarCSS('--primary-color');
+        config_initial_callback.color_feature = selectVarCSS('--primary-color');
+    }else{
+        config_initial.color_feature = selectVarCSS('--secondary-color');
+        config_initial.color_highlightFeature = selectVarCSS('--secondary-color');
+        config_initial.color_feature = selectVarCSS('--secondary-color');
+
+        config_initial_callback.color_feature = selectVarCSS('--secondary-color');
+        config_initial_callback.color_feature = selectVarCSS('--secondary-color');
+    }
+
+    if(input_checked){
+        return config_initial_callback;
+    }else{
+        return config_initial;
+    }
+
+}
+
 function create_map({polygon_asic, array_img, geojson_point}){
     const initial_coordinates = [10.90847, -72.08446];
 
@@ -503,22 +533,36 @@ function create_map({polygon_asic, array_img, geojson_point}){
     };
 
     
-    osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+   var osm_basemap = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
 		minZoom: 7,
 		maxZoom: 19,
 		type:'osm'
 	}).addTo(map);
+
+    var google_basemap = L.tileLayer('http://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}', {
+        minZoom: 7,
+        maxZoom: 19,
+        layers: "0",
+        format: 'image/jpeg',
+        transparent: true,
+        attribution: "Aerial Imagery courtesy USGS"
+    });
+
+    var baseLayers = {
+		"Base Cartografica": osm_basemap,
+		"Imagen Satelital": google_basemap
+	};
     
 
-    let CONFIG_INTIAL = {
+    let CONFIG_INITIAL = {
         'color_feature': selectVarCSS('--primary-color'),
         'color_highlightFeature': selectVarCSS('--primary-color'),
         'fillOpacity_highlightFeature': 0.2,
         'callback': null
     }
 
-    let CONFIG_INTIAL_CALLBACK = {
+    let CONFIG_INITIAL_CALLBACK = {
         'color_feature': selectVarCSS('--primary-color'),
         'color_highlightFeature': selectVarCSS('--fourth-color'),
         'fillOpacity_highlightFeature': 0.7,
@@ -532,7 +576,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
 
     var layer_polygon_asic = create_polygon_geojson({
         polygon_asic: polygon_asic,
-        config: CONFIG_INTIAL,
+        config: CONFIG_INITIAL,
         info: info,
         map: map
     })
@@ -541,7 +585,8 @@ function create_map({polygon_asic, array_img, geojson_point}){
 
     selectElement('#toggle').addEventListener('input', (e) => {
         var element = e.target,
-            name_basemap = element.dataset.basemap;
+            name_basemap = element.dataset.basemap,
+            input_checked = element.checked;
 
         element.disabled = true;
 
@@ -549,33 +594,76 @@ function create_map({polygon_asic, array_img, geojson_point}){
             element.removeAttribute('disabled');
         }, 2000);
 
-        if (name_basemap == 'osm'){
-            CONFIG_INTIAL.color_feature = selectVarCSS('--primary-color');
-            CONFIG_INTIAL_CALLBACK.color_feature = selectVarCSS('--primary-color');
-        }else{
-            CONFIG_INTIAL.color_feature = selectVarCSS('--secondary-color');
-            CONFIG_INTIAL_CALLBACK.color_feature = selectVarCSS('--secondary-color');
-        }
+        var config_function = create_config_polygon_asic_change({
+            name_basemap: name_basemap,
+            input_checked: input_checked,
+            config_initial: CONFIG_INITIAL,
+            config_initial_callback: CONFIG_INITIAL_CALLBACK
+        });
 
         layer_polygon_asic.clearLayers();
 
         var config_polygon = {
             polygon_asic: polygon_asic,
-            config: CONFIG_INTIAL_CALLBACK,
+            config: config_function,
             info: info,
             map: map
-        }
+        };
 
-        if(element.checked){
-            layer_polygon_asic = create_polygon_geojson(config_polygon);
-        }else{
-            config_polygon.config = CONFIG_INTIAL;
-            layer_polygon_asic = create_polygon_geojson(config_polygon);
-        }
+        layer_polygon_asic = create_polygon_geojson(config_polygon);
 
         layer_polygon_asic.addTo(map);
 
     }, false);
+
+    map.on('baselayerchange', (e) => {
+        name_basemap = e.name.toLowerCase();
+
+        var name_dataset = 'osm';
+
+        if(name_basemap == 'imagen satelital'){
+            name_dataset = 'google';
+        }
+
+        var info_map = selectElement('div.info'),
+            icon_info_map = selectElement('#map-pin-2 path');
+
+        if(name_dataset == 'google'){
+            info_map.classList.remove('background_primary');
+            info_map.classList.add('background_secondary');
+            icon_info_map.style['stroke'] = selectVarCSS('--primary-color');
+        }else{
+            info_map.classList.remove('background_secondary');
+            info_map.classList.add('background_primary');
+            icon_info_map.style['stroke'] = selectVarCSS('--secondary-color');
+        }
+
+        var input_switch = selectElement('#toggle'),
+            input_checked = input_switch.checked;
+
+        input_switch.setAttribute('data-basemap', name_dataset);
+
+        var config_function = create_config_polygon_asic_change({
+            name_basemap: name_dataset,
+            input_checked: input_checked,
+            config_initial: CONFIG_INITIAL,
+            config_initial_callback: CONFIG_INITIAL_CALLBACK
+        });
+
+        layer_polygon_asic.clearLayers();
+
+        var config_polygon = {
+            polygon_asic: polygon_asic,
+            config: config_function,
+            info: info,
+            map: map
+        };
+
+        layer_polygon_asic = create_polygon_geojson(config_polygon);
+
+        layer_polygon_asic.addTo(map);
+        
+    });
 
     var legend = null;
 
@@ -611,7 +699,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
         subGroup_amb = L.featureGroup.subGroup(parentGroup, [point_amb]),
         subGroup_cmp = L.featureGroup.subGroup(parentGroup, [point_cmp]);
 
-    let control = L.control.layers(null, null, {
+    let control = L.control.layers(baseLayers, null, {
         collapsed: true,  
         position: 'topright'
     }).addTo(map);

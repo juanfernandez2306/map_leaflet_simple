@@ -536,6 +536,11 @@ div.info{
     color: var(--secondary-color);
 }
 
+.info.background_secondary{
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
 .info .header_info{
     display: flex;
     flex-direction: row;
