@@ -156,45 +156,6 @@ nav a{
 }
 /*end class wallpaper*/
 
-/*class geolocation*/
-
-.geolocation .body_sidebar{
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.geolocation .body_sidebar button{
-    width: 70%;
-    align-self: center;
-    font-size: 1rem;
-    font-family: var(--font-body);
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    border-radius: .4rem;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
-}
-
-.geolocation .body_sidebar button.active:hover{
-    background-color: var(--fourth-color);
-    color: var(--secondary-color);
-}
-
-.geolocation .body_sidebar button.active:hover b{
-    font-weight: 700;
-}
-
-.geolocation .body_sidebar button:disabled{
-    background-color: var(--fifth-color);
-}
-
-.geolocation .body_sidebar button b{
-    font-weight: normal;
-}
-
-/*end class geolocation*/
-
 /*class config_asic*/
 
 .config_asic .body_sidebar div{
@@ -528,15 +489,15 @@ div.info{
     max-width: 400px;
     padding: .5rem;
     border-radius: .5rem;
-    opacity: .7;
+    opacity: .9;
 }
 
-.info.background_primary{
+.background_primary{
     background-color: var(--primary-color);
     color: var(--secondary-color);
 }
 
-.info.background_secondary{
+.background_secondary{
     background-color: var(--secondary-color);
     color: var(--primary-color);
 }
@@ -574,23 +535,27 @@ div.info{
 
 /*div legend map*/
 div.map_legend{
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
     font-family: var(--font-body);
     font-size: 1rem;
-    opacity: .7;
     max-width: 18.5rem;
-    padding: .8rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+    margin: 0;
     border-radius: .3rem;
+    opacity: .9;
 }
 
 div.map_legend .title{
     text-align: center;
     padding: 0;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 div.map_legend .title h3{
     font-weight: 700;
+    margin-top: .4rem;
+    margin-bottom: 0;
 }
 
 div.map_legend .title h3 i{
@@ -602,7 +567,7 @@ div.map_legend .items{
     flex-direction: row;
     justify-content: left;
     align-items: center;
-    gap: 1.5rem;
+    gap: .8rem;
     margin-bottom: .5rem;
 }
 
@@ -620,6 +585,37 @@ div.map_legend .items b{
     font-weight: 700;
 }
 /*end div legend map*/
+
+/*class leaflet-control-layers-list*/
+.leaflet-control-layers-list{
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+.leaflet-control-layers-list input{
+    accent-color: var(--primary-color);
+}
+/*end class leaflet-control-layers-list*/
+
+.easy-button-button:disabled{
+    color: #bbb;
+    background-color: #f4f4f4;
+}
+
+.title_swal{
+    color: var(--primary-color);
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+}
+
+.btn_close_swal{
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    padding: .8rem;
+}
 
 .hide{
     display: none;
@@ -711,6 +707,7 @@ div.map_legend .items b{
 
     div.info{
         width: 70%;
+        opacity: .7;
     }
 
     #map-pin-2{
@@ -799,4 +796,5 @@ div.map_legend .items b{
     .table_response th{
         width: 30%;
     }
+
 }

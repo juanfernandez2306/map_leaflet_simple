@@ -15,7 +15,12 @@
     <script src="../complementos/leafletJS/Leaflet_markercluster/leafletMarkercluster-src.js"></script>
     <script src="../complementos/leafletJS/Leaflet_markercluster/subgroup.js"></script>
 
+    <link rel="stylesheet" href="../complementos/leafletJS/Leaflet.EasyButton/src/easy-button.css">
+    <script src="../complementos/leafletJS/Leaflet.EasyButton/src/easy-button.js"></script>
+
     <script src="../complementos/topojson.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="assets/main.css">
     <script src="assets/main.js"></script>
@@ -60,12 +65,6 @@
             <section class="menu_items hide_menu">
                 <ul>
                     <li>
-                        <a class="open_sidebar" data-sidebar="geolocation">
-                            <i class="fas fa-map"></i>
-                            Geolocalización
-                        </a>
-                    </li>
-                    <li>
                         <a class="open_sidebar" data-sidebar="config_asic">
                             <i class="fas fa-exchange-alt"></i>
                             Configuración capa ASIC
@@ -90,39 +89,6 @@
         <section id="map"></section>
 
         <aside id="screen"></aside>
-
-        <aside id="geolocation" class="sidebar hide">
-            <section class="header_sidebar">
-                <h3>
-                    <i class="fas fa-map"></i>
-                    Geolocalización
-                </h3>
-                <a class="btn_close_sidebar" data-sidebar="geolocation">
-                    <i class="fas fa-times"></i>
-                </a>
-            </section>
-            <section class="body_sidebar">
-                <button id="start_geolocation" class="active">
-                    <i class="fas fa-home"></i>
-                    <b>Iniciar</b>
-                </button>
-                <button id="remove_geolocation" class="active">
-                    <i class="fas fa-home"></i>
-                    <b>Remover</b>
-                </button>
-                <button id="zoom_geolocation" class="active">
-                    <i class="fas fa-home"></i>
-                    <b>Zoom</b>
-                </button>
-            </section>
-            <section class="footer_sidebar">
-                <button class="btn_close_sidebar" data-sidebar="geolocation">
-                    <i class="fas fa-times"></i>
-                    <b>CERRAR</b>
-                </button>
-            </section>
-            
-        </aside>
 
         <aside id="config_asic" class="sidebar hide">
             <section class="header_sidebar">

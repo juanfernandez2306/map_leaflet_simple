@@ -321,7 +321,16 @@ function create_legend(array_img){
     `;
 
     legend.onAdd = function(e){
-        this._div = L.DomUtil.create('div', 'map_legend');
+        var name_class = 'map_legend',
+            name_baselayer = selectElement('#toggle').dataset.basemap;
+
+        if(name_baselayer == 'osm'){
+            name_class += ' background_primary';
+        }else{
+            name_class += ' background_secondary';
+        }
+
+        this._div = L.DomUtil.create('div', name_class);
         this._div.innerHTML = html;
         return this._div;
     }
@@ -500,12 +509,64 @@ function create_config_polygon_asic_change({
 
 }
 
+function init_geolocation({layer_group_geolocation, map}){
+
+    var icon_init_geolocation = selectElement('#init_geolocation span span');
+
+    icon_init_geolocation.classList.remove('fa-crosshairs');
+    icon_init_geolocation.classList.add('fa-circle');
+    icon_init_geolocation.classList.add('fade_in_color');
+
+    map.locate({setView: true, maxZoom: 16});
+
+    function onLocationFound(e){
+        var radius = e.accuracy;
+
+        console.log(radius);
+    
+        var marker = L.marker(e.latlng)
+            .bindPopup("You are within " + radius + " meters from this point")
+            .openPopup();
+    
+        var circle = L.circle(e.latlng, radius);
+
+        setTimeout(()=>{
+
+            Swal.fire({
+                title: 'Geolocalización satisfactoria',
+                icon: 'success',
+                iconColor: selectVarCSS('--primary-color'),
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false,
+                customClass: {
+                    title: 'title_swal',
+                    confirmButton: 'btn_close_swal'
+                }
+            });
+
+            icon_init_geolocation.classList.remove('fa-circle');
+            icon_init_geolocation.classList.add('fa-crosshairs');
+            icon_init_geolocation.classList.remove('fade_in_color');
+
+            layer_group_geolocation.addLayer(marker);
+            layer_group_geolocation.addLayer(circle);
+
+            selectElement('#zoom_geolocation').removeAttribute('disabled');
+            selectElement('#remove_geolocation').removeAttribute('disabled');
+
+        }, 1000);
+    }
+
+    map.on('locationfound', onLocationFound);
+}
+
 function create_map({polygon_asic, array_img, geojson_point}){
     const initial_coordinates = [10.90847, -72.08446];
+    const initial_zoom = 7;
 
     var map = L.map('map', {
 		center: initial_coordinates,
-		zoom: 7,
+		zoom: initial_zoom,
 		minZoom: 7,
 		maxZoom: 18
 	});
@@ -569,6 +630,30 @@ function create_map({polygon_asic, array_img, geojson_point}){
         'callback': callback_response
     }
 
+    //create legend map
+    var legend = null;
+
+    var media_query = '(min-width: 900px)';
+
+    if(window.matchMedia(media_query).matches){
+        legend = create_legend(array_img);
+        legend.addTo(map);
+    }
+
+    window.addEventListener('resize', (e) =>{
+        if(legend != null){
+            map.removeControl(legend);
+            legend = null;
+        }
+
+        if(window.matchMedia(media_query).matches){
+            legend = create_legend(array_img);
+            legend.addTo(map);
+        }
+
+    }, false);
+
+    //end create legend map
 
     let info = create_info_map();
 
@@ -632,10 +717,21 @@ function create_map({polygon_asic, array_img, geojson_point}){
             info_map.classList.remove('background_primary');
             info_map.classList.add('background_secondary');
             icon_info_map.style['stroke'] = selectVarCSS('--primary-color');
+
+            if(legend != null){
+                selectElement('div.map_legend').classList.remove('background_primary');
+                selectElement('div.map_legend').classList.add('background_secondary');
+            }
+
         }else{
             info_map.classList.remove('background_secondary');
             info_map.classList.add('background_primary');
             icon_info_map.style['stroke'] = selectVarCSS('--secondary-color');
+
+            if(legend != null){
+                selectElement('div.map_legend').classList.remove('background_secondary');
+                selectElement('div.map_legend').classList.add('background_primary');
+            }
         }
 
         var input_switch = selectElement('#toggle'),
@@ -665,29 +761,6 @@ function create_map({polygon_asic, array_img, geojson_point}){
         
     });
 
-    var legend = null;
-
-    var media_query = '(min-width: 900px)';
-
-    if(window.matchMedia(media_query).matches){
-        legend = create_legend(array_img);
-        legend.addTo(map);
-    }
-
-    window.addEventListener('resize', (e) =>{
-        if(legend != null){
-            map.removeControl(legend);
-            legend = null;
-        }
-
-        if(window.matchMedia(media_query).matches){
-            legend = create_legend(array_img);
-            legend.addTo(map);
-        }
-
-    }, false);
-
-
     let point_hospital = filter_layer_geojson_point(geojson_point, 1, array_img, 35),
         point_cdi = filter_layer_geojson_point(geojson_point, 2, array_img),
         point_amb = filter_layer_geojson_point(geojson_point, 3, array_img),
@@ -713,6 +786,90 @@ function create_map({polygon_asic, array_img, geojson_point}){
     subGroup_cdi.addTo(map);
     subGroup_amb.addTo(map);
     subGroup_cmp.addTo(map);
+
+    let layer_group_geolocation = L.featureGroup();
+    layer_group_geolocation.addTo(map);
+
+    L.easyButton('fa-home', function(btn, map){
+        map.setView(initial_coordinates, initial_zoom);
+    }).addTo(map);
+
+    L.easyButton({
+        id: 'init_geolocation',
+        position: 'topleft',
+        type: 'replace',
+        leafletClasses: true,
+        states:[{
+          stateName: 'get-center',
+          onClick: function(btn, map){
+            btn.button.disabled = true;
+
+            init_geolocation({
+                layer_group_geolocation: layer_group_geolocation, 
+                map: map
+            });
+
+          },
+          title: 'Iniciar geolocalización',
+          icon: 'fa-crosshairs'
+        }]
+    }).addTo(map);
+
+    L.easyButton({
+        id: 'zoom_geolocation',
+        position: 'topleft',
+        type: 'replace',
+        leafletClasses: true,
+        states:[{
+          stateName: 'get-center',
+          onClick: function(btn, map){
+
+            var bounds = layer_group_geolocation.getBounds();
+            map.fitBounds(bounds);
+
+          },
+          title: 'Zoom a la geolocalización',
+          icon: 'fa-search-location'
+        }]
+    }).addTo(map);
+
+    selectElement('#zoom_geolocation').disabled = true;
+
+    L.easyButton({
+        id: 'remove_geolocation',
+        position: 'topleft',
+        type: 'replace',
+        leafletClasses: true,
+        states:[{
+          stateName: 'get-center',
+          onClick: function(btn, map){
+
+            btn.button.disabled = true;
+
+            Swal.fire({
+                title: 'Capa de geolocalización eliminada satisfactoriamente',
+                icon: 'success',
+                iconColor: selectVarCSS('--primary-color'),
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false,
+                customClass: {
+                    title: 'title_swal',
+                    confirmButton: 'btn_close_swal'
+                }
+            });
+
+            layer_group_geolocation.clearLayers();
+
+            selectElement('#init_geolocation').removeAttribute('disabled');
+            selectElement('#zoom_geolocation').disabled = true;
+
+          },
+          title: 'Remover a la geolocalización',
+          icon: 'fa-trash-restore'
+        }]
+    }).addTo(map);
+
+    selectElement('#remove_geolocation').disabled = true;
 }
 
 function load_svg_legend(array_img){
@@ -742,10 +899,6 @@ function change_status_switch_text(e){
 function start(){
 
     selectElement('#burge_icon').addEventListener('click', state_menu_burge, false);
-
-    selectElement('#start_geolocation').addEventListener('click', state_button, false);
-    selectElement('#remove_geolocation').addEventListener('click', state_button, false);
-    selectElement('#zoom_geolocation').addEventListener('click', state_button, false);
 
     selectElement('#toggle').addEventListener('input', change_status_switch_text, false);
 
