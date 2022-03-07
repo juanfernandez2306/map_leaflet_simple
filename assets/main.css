@@ -780,6 +780,10 @@ div.map_legend .items b{
         text-align: right;
     }
 
+    #map{
+        min-height: 300px;
+    }
+
 }
 
 @media (min-width: 900px){
@@ -846,6 +850,10 @@ div.map_legend .items b{
 
     .table_response th{
         width: 30%;
+    }
+
+    #map{
+        min-height: 500px;
     }
 
 }
