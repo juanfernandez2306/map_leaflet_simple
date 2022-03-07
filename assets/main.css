@@ -311,7 +311,6 @@ nav a{
 
 .information .body_sidebar aside{
     align-self: center;
-    max-height: 80vh;
     border: .2rem solid var(--fifth-color);
 }
 
@@ -780,7 +779,7 @@ div.map_legend .items b{
         text-align: right;
     }
 
-    #map{
+    .sidebar, #map{
         min-height: 300px;
     }
 
@@ -852,7 +851,7 @@ div.map_legend .items b{
         width: 30%;
     }
 
-    #map{
+    .sidebar, #map{
         min-height: 500px;
     }
 

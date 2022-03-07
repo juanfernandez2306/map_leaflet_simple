@@ -1001,17 +1001,17 @@ function start(){
 
         let geojson_point = create_geojson_point(data_point);
 
+        selectElement('#init_preloader').classList.remove('init_preloader');
+        selectElement('#init_preloader').classList.add('hide');
+        selectElement('main').classList.remove('hide');
+        
+        selectElement('main').style['animation-name'] = 'fade_in_data';
+
         create_map({
             'polygon_asic': polygon,
             'array_img' : array_img,
             'geojson_point': geojson_point
-        })
-
-        selectElement('#init_preloader').classList.remove('init_preloader');
-        selectElement('#init_preloader').classList.add('hide');
-        selectElement('main').classList.remove('hide');
-
-        selectElement('main').style['animation-name'] = 'fade_in_data';
+        });
 
     })
     .catch((error) => {
