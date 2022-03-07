@@ -543,12 +543,20 @@ function init_geolocation({layer_group_geolocation, map}){
                 <h2><i class="fas fa-user"></i></h2>
                 <h3>Esta es tu ubicación con una precisión ${parseInt(radius)} de metros</h3>
             </div>`;
+
+            var iconMarker = L.AwesomeMarkers.icon({
+                icon: 'fa-user',
+                prefix : 'fa',
+                markerColor: 'red'
+            });
     
-            var marker = L.marker(e.latlng)
+            var marker = L.marker(e.latlng, {icon: iconMarker})
                 .bindPopup(content_html)
                 .openPopup();
     
-            var circle = L.circle(e.latlng, radius);
+            var circle = L.circle(e.latlng, radius, 
+                {color: selectVarCSS('--fourth-color')}
+            );
 
             setTimeout(()=>{
 
@@ -998,8 +1006,20 @@ function start(){
             'array_img' : array_img,
             'geojson_point': geojson_point
         })
+
+        selectElement('#init_preloader').classList.remove('init_preloader');
+        selectElement('#init_preloader').classList.add('hide');
+        selectElement('main').classList.remove('hide');
+
+        selectElement('main').style['animation-name'] = 'fade_in_data';
+
     })
     .catch((error) => {
+        selectElement('#init_preloader svg use').setAttribute('xlink:href', 'cloud_computing');
+        selectElement('div.text_preloader').innerHTML = `
+            <h3>Ocurrió un error de conexión con el servidor</h3>
+            <h3>Verifique su conexión de internet</h3>
+        `;
 		console.log(error);
 	})
     
