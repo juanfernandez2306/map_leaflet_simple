@@ -609,6 +609,12 @@ div.map_legend .items b{
     font-size: 1.5rem;
 }
 
+.title_error_swal{
+    color: var(--fourth-color);
+    font-family: var(--font-body);
+    font-size: 1.5rem;
+}
+
 .btn_close_swal{
     background-color: var(--primary-color);
     color: var(--secondary-color);
@@ -616,6 +622,30 @@ div.map_legend .items b{
     font-size: 1.2rem;
     padding: .8rem;
 }
+
+.popup{
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-body);
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.popup h2 i{
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}
+
+.popup h3{
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin: 0;
+}
+
+
 
 .hide{
     display: none;

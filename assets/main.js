@@ -113,44 +113,6 @@ function open_sidebar(e){
     }, 2100);
 }
 
-/**
-    @param {string} text - text class Element HTML
-    @returns {string} - name class fontawesome
-*/
-function search_class_font_awesome(text){
-    let array_text = text.split(' ');
-    let regex = new RegExp('^fa-');
-    for(var x = 0; x < array_text.length; x++){
-        let value = array_text[x];
-        let validation = regex.test(value);
-        if(validation){
-            return value;
-        }
-
-    }
-}
-
-/**
-    replace icon font awesome
-    and add class fade in
-*/
-function state_button(e){
-    e.preventDefault();
-    
-    this.classList.remove('active');
-    this.disabled = true;
-
-    var element_i = this.querySelector('i');
-    var class_name = element_i.className;
-
-    var class_font_awesome = search_class_font_awesome(class_name);
-
-    element_i.classList.remove(class_font_awesome);
-    element_i.classList.add('fa-circle');
-    element_i.classList.add('fade_in_color');
-
-}
-
 function state_menu_burge(e){
     e.preventDefault();
     selectElement('#font_burge').classList.toggle('hide');
@@ -509,6 +471,20 @@ function create_config_polygon_asic_change({
 
 }
 
+function verifyCoordinateLimits(leafletObjectLatLng){
+    var lat= leafletObjectLatLng.lat,
+        lng = leafletObjectLatLng.lng;
+        
+    var limitLat = lat >= 8.36808 && lat <= 11.85079,
+        limitLng = lng >= -73.37939 && lng <= -70.66714;
+        
+    if(limitLat == true && limitLng == true){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 function init_geolocation({layer_group_geolocation, map}){
 
     var icon_init_geolocation = selectElement('#init_geolocation span span');
@@ -520,26 +496,19 @@ function init_geolocation({layer_group_geolocation, map}){
     map.locate({setView: true, maxZoom: 16});
 
     function onLocationFound(e){
-        var radius = e.accuracy;
+        var radius = e.accuracy,
+            verify_coordintes_point = verifyCoordinateLimits(e.latlng);
 
-        console.log(radius);
-    
-        var marker = L.marker(e.latlng)
-            .bindPopup("You are within " + radius + " meters from this point")
-            .openPopup();
-    
-        var circle = L.circle(e.latlng, radius);
-
-        setTimeout(()=>{
+        if(parseInt(radius) > 100){
 
             Swal.fire({
-                title: 'Geolocalización satisfactoria',
-                icon: 'success',
-                iconColor: selectVarCSS('--primary-color'),
+                title: 'No se obtuvo buena precisión en la geolocalización',
+                icon: 'error',
+                iconColor: selectVarCSS('--fourth-color'),
                 confirmButtonText: 'Cerrar',
                 buttonsStyling: false,
                 customClass: {
-                    title: 'title_swal',
+                    title: 'title_error_swal',
                     confirmButton: 'btn_close_swal'
                 }
             });
@@ -548,16 +517,89 @@ function init_geolocation({layer_group_geolocation, map}){
             icon_init_geolocation.classList.add('fa-crosshairs');
             icon_init_geolocation.classList.remove('fade_in_color');
 
-            layer_group_geolocation.addLayer(marker);
-            layer_group_geolocation.addLayer(circle);
+            selectElement('#init_geolocation').removeAttribute('disabled');
 
-            selectElement('#zoom_geolocation').removeAttribute('disabled');
-            selectElement('#remove_geolocation').removeAttribute('disabled');
+        }else if(verify_coordintes_point == false){
+            Swal.fire({
+                title: '¡Disculpe! Usted se encuentra fuera del área de influencia del estado Zulia - Venezuela',
+                icon: 'error',
+                iconColor: selectVarCSS('--fourth-color'),
+                confirmButtonText: 'Cerrar',
+                buttonsStyling: false,
+                customClass: {
+                    title: 'title_error_swal',
+                    confirmButton: 'btn_close_swal'
+                }
+            });
 
-        }, 1000);
+            icon_init_geolocation.classList.remove('fa-circle');
+            icon_init_geolocation.classList.add('fa-crosshairs');
+            icon_init_geolocation.classList.remove('fade_in_color');
+
+            selectElement('#init_geolocation').removeAttribute('disabled');
+
+        }else{
+            var content_html = `<div class="popup">
+                <h2><i class="fas fa-user"></i></h2>
+                <h3>Esta es tu ubicación con una precisión ${parseInt(radius)} de metros</h3>
+            </div>`;
+    
+            var marker = L.marker(e.latlng)
+                .bindPopup(content_html)
+                .openPopup();
+    
+            var circle = L.circle(e.latlng, radius);
+
+            setTimeout(()=>{
+
+                Swal.fire({
+                    title: 'Geolocalización satisfactoria',
+                    icon: 'success',
+                    iconColor: selectVarCSS('--primary-color'),
+                    confirmButtonText: 'Cerrar',
+                    buttonsStyling: false,
+                    customClass: {
+                        title: 'title_swal',
+                        confirmButton: 'btn_close_swal'
+                    }
+                });
+
+                icon_init_geolocation.classList.remove('fa-circle');
+                icon_init_geolocation.classList.add('fa-crosshairs');
+                icon_init_geolocation.classList.remove('fade_in_color');
+
+                layer_group_geolocation.addLayer(marker);
+                layer_group_geolocation.addLayer(circle);
+
+                selectElement('#zoom_geolocation').removeAttribute('disabled');
+                selectElement('#remove_geolocation').removeAttribute('disabled');
+
+            }, 1000);
+
+        }
+
+    }
+
+    function onLocationError(e){
+        selectElement('#init_geolocation').removeAttribute('disabled');
+
+        Swal.fire({
+            title: 'Acceso denegado en el dispositivo para el proceso de geolocalización',
+            icon: 'error',
+            iconColor: selectVarCSS('--fourth-color'),
+            confirmButtonText: 'Cerrar',
+            buttonsStyling: false,
+            customClass: {
+                title: 'title_error_swal',
+                confirmButton: 'btn_close_swal'
+            }
+        });
+        
+        console.log(e.message);
     }
 
     map.on('locationfound', onLocationFound);
+    map.on('locationerror', onLocationError);
 }
 
 function create_map({polygon_asic, array_img, geojson_point}){
