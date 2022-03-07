@@ -610,8 +610,11 @@ function create_map({polygon_asic, array_img, geojson_point}){
 		center: initial_coordinates,
 		zoom: initial_zoom,
 		minZoom: 7,
-		maxZoom: 18
+		maxZoom: 18,
+        gestureHandling: true
 	});
+
+    L.control.scale({imperial: false}).addTo(map);
 
     //extend Leaflet to create a GeoJSON layer from a TopoJSON file
     L.TopoJSON = L.GeoJSON.extend({
@@ -643,14 +646,9 @@ function create_map({polygon_asic, array_img, geojson_point}){
 		type:'osm'
 	}).addTo(map);
 
-    var google_basemap = L.tileLayer('http://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}', {
-        minZoom: 7,
-        maxZoom: 19,
-        layers: "0",
-        format: 'image/jpeg',
-        transparent: true,
-        attribution: "Aerial Imagery courtesy USGS"
-    });
+    var google_basemap = L.gridLayer.googleMutant({
+		type:'hybrid'
+	});
 
     var baseLayers = {
 		"Base Cartografica": osm_basemap,

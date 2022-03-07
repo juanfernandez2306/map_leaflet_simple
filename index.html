@@ -6,19 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa sanitario Zulia</title>
 
-    <link rel="stylesheet" href="../complementos/fontawesome/fontawesome/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet"> 
 
-    <link rel="stylesheet" href="../complementos/leafletJS/leaflet_v1.7.1/leaflet.css">
-    <script src="../complementos/leafletJS/leaflet_v1.7.1/leaflet-src.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" 
+	crossorigin="anonymous">
 
-    <link rel="stylesheet" href="../complementos/leafletJS/Leaflet_markercluster/MarkerCluster.Default.css"> 
-    <script src="../complementos/leafletJS/Leaflet_markercluster/leafletMarkercluster-src.js"></script>
-    <script src="../complementos/leafletJS/Leaflet_markercluster/subgroup.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" 
+	integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" 
+	crossorigin="" />
 
-    <link rel="stylesheet" href="../complementos/leafletJS/Leaflet.EasyButton/src/easy-button.css">
-    <script src="../complementos/leafletJS/Leaflet.EasyButton/src/easy-button.js"></script>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" 
+	integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" 
+	crossorigin=""></script>
 
-    <script src="../complementos/topojson.min.js"></script>
+	<link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" 
+	type="text/css">
+	<script src="//unpkg.com/leaflet-gesture-handling"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster-src.js" 
+	integrity="sha512-+v1wwh3/ssdlBHT9KaotlPNisom2W6Ryj4g2/HfkKu6OLp62Lbf6VgRdEm2+OYOQVnR0WoxVgWZq5JmPBAj+HQ==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.min.css" 
+	integrity="sha512-ENrTWqddXrLJsQS2A86QmvA17PkJ0GVm1bqj5aTgpeMAfDKN2+SIOLpKG8R/6KkimnhTb+VW5qqUHB/r1zaRgg==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.min.css" 
+	integrity="sha512-fYyZwU1wU0QWB4Yutd/Pvhy5J1oWAwFXun1pt+Bps04WSe4Aq6tyHlT4+MHSJhD8JlLfgLuC4CbCnX5KHSjyCg==" 
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="assets/subgroup.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAM9cbWcbs4jPW9OFLMmFbiBM0pAX8Gbh8" async defer></script>
+	<script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/dist/Leaflet.GoogleMutant.js"></script>
+
+    <script src="https://unpkg.com/topojson@3.0.2/dist/topojson.min.js"></script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

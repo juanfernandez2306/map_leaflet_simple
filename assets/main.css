@@ -1,13 +1,3 @@
-@font-face {
-    font-family: roboto;
-    src: url(../../complementos/font/roboto/RobotoCondensed-Bold.ttf);
-}
-
-@font-face {
-    font-family: nunito;
-    src: url(../../complementos/font/Nunito/Nunito-Regular.ttf);
-}
-
 :root{
     --primary-color: #00868A;
     --secondary-color: #FAEED2;
@@ -15,8 +5,8 @@
     --fourth-color: #D885A3;
     --fifth-color: #cececeff;
     --heigth-nav: 3.6rem;
-    --font-header: roboto, Arial, Helvetica, sans-serif;
-    --font-body: nunito, Arial, Helvetica, sans-serif;
+    --font-header: 'Roboto Condensed', Arial, Helvetica, sans-serif;
+    --font-body: 'Nunito', Arial, Helvetica, sans-serif;
 }
 
 body{
