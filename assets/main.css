@@ -44,6 +44,7 @@ nav a{
     font-size: 1.2rem;
     font-family: var(--font-body);
     cursor: pointer;
+    font-weight: 700;
 }
 
 #map{
@@ -727,7 +728,6 @@ div.map_legend .items b{
 
     div.info{
         width: 70%;
-        opacity: .7;
     }
 
     #map-pin-2{
