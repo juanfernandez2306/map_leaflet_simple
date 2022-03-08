@@ -602,6 +602,12 @@ function init_geolocation({layer_group_geolocation, map}){
                 confirmButton: 'btn_close_swal'
             }
         });
+
+        icon_init_geolocation.classList.remove('fa-circle');
+        icon_init_geolocation.classList.add('fa-crosshairs');
+        icon_init_geolocation.classList.remove('fade_in_color');
+
+        selectElement('#init_geolocation').removeAttribute('disabled');
         
         console.log(e.message);
     }
@@ -618,8 +624,7 @@ function create_map({polygon_asic, array_img, geojson_point}){
 		center: initial_coordinates,
 		zoom: initial_zoom,
 		minZoom: 7,
-		maxZoom: 18,
-        gestureHandling: true
+		maxZoom: 18
 	});
 
     L.control.scale({imperial: false}).addTo(map);

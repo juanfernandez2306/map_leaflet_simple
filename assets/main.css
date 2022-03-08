@@ -11,8 +11,8 @@
 
 body{
     font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+    background-color: white;
 }
 
 .init_preloader{
