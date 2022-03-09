@@ -618,7 +618,7 @@ div.map_legend .items b{
 /*class leaflet-control-layers-list*/
 .leaflet-control-layers-list{
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: .8rem;
     color: var(--primary-color);
 }
 

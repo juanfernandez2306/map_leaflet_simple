@@ -214,6 +214,8 @@ async function callback_response({cod_number, name_field, url}){
             body_response = selectElement('#body_response');
         
         if(data.response){
+            restart_menu_burge();
+            
             preloader_header.classList.add('hide');
             content_response.classList.remove('hide');
             content_response.classList.add('sidebar');
@@ -341,12 +343,19 @@ function create_polygon_geojson({polygon_asic, config, info, map}){
 	function highlightFeature(e){
 		var layer = e.target;
 
+        var zoom_current = map.getZoom(),
+            opacity_value = config.fillOpacity_highlightFeature;
+
+        if(zoom_current >= 15){
+            opacity_value = 0;
+        }
+
 		layer.setStyle({
 			weight: 5,
 			color: config.color_highlightFeature,
 			dashArray: '',
-			fillOpacity: config.fillOpacity_highlightFeature
-			});
+			fillOpacity: opacity_value
+		});
 
 		info.update(layer.feature.properties);
 	};
@@ -589,6 +598,11 @@ function init_geolocation({layer_group_geolocation, map}){
     }
 
     function onLocationError(e){
+
+        icon_init_geolocation.classList.remove('fa-circle');
+        icon_init_geolocation.classList.add('fa-crosshairs');
+        icon_init_geolocation.classList.remove('fade_in_color');
+        
         selectElement('#init_geolocation').removeAttribute('disabled');
 
         Swal.fire({
@@ -602,12 +616,6 @@ function init_geolocation({layer_group_geolocation, map}){
                 confirmButton: 'btn_close_swal'
             }
         });
-
-        icon_init_geolocation.classList.remove('fa-circle');
-        icon_init_geolocation.classList.add('fa-crosshairs');
-        icon_init_geolocation.classList.remove('fade_in_color');
-
-        selectElement('#init_geolocation').removeAttribute('disabled');
         
         console.log(e.message);
     }
