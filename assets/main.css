@@ -300,7 +300,7 @@ nav a{
 }
 
 .information .body_sidebar .items p a{
-    text-decoration: none;
+    text-decoration: underline;
     color: var(--secondary-color);
     font-weight: 700;
 }
@@ -673,8 +673,6 @@ div.map_legend .items b{
     text-align: center;
     margin: 0;
 }
-
-
 
 .hide{
     display: none;
