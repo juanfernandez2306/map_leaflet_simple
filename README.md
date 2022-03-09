@@ -35,8 +35,8 @@ Descargar fotos de los establecimientos de salud y descomprimir en la carpeta __
 ```
 - Crear una base de datos MySQL con codificación UTF-8
 - Nombre de la base de datos _mapa_zulia_
-- Cargar script sql/bd.sql
-- Cargar script sql/establecimientos_salud.sql
+- Cargar script assets/database/bd.sql
+- Cargar script assets/database/establecimientos_salud.sql
 - De ser necesario modificar parametros de conexión bd en assets/php/Class/Constants.php
 
 ## :bust_in_silhouette: Contactos
