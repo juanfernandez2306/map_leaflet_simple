@@ -2,26 +2,34 @@
 Plantilla  de diseño web adaptable  (del ingles _responsive web design_) 
 para crear aplicaciones de mapas web con __LeafletJS__.
 
-## Overview
+## :eye_speech_bubble: Overview
 
 ![Img overview project](assets/img/overview.gif)
 
-## :eye_speech_bubble: Demo
+## Demo
 
 [Demo](http://jfcoordenadas.xyz/mapa_zulia/)
 
-## Framework
-- Font Awesome
-- Leaflet JS
+## :keyboard: Framework
+- [Font Awesome](https://fontawesome.com/)
+- [sweetAlert2](https://sweetalert2.github.io/)
+- [Leaflet JS](https://leafletjs.com/)
 
-## Plugin Leaflet
+### Plugin Leaflet
+
+- [TopoJson](http://bl.ocks.org/hpfast/2fb8de57c356d8c45ce511189eec5d6a)
+- [Leaflet marker Cluster](https://github.com/Leaflet/Leaflet.markercluster)
+- [Leaflet Awesome Markers V2](https://github.com/lennardv2/Leaflet.awesome-markers)
+- [Leaflet EasyButton](https://github.com/CliffCloud/Leaflet.EasyButton)
+- [Leaflet GridLayer GoogleMutant](https://gitlab.com/IvanSanchez/Leaflet.GridLayer.GoogleMutant/tree/master)
+
 
 ## :rocket: Instalación
 Clonar proyecto
 ```
 	git clone https://github.com/juanfernandez2306/map_leaflet_simple.git
 ```
-Descargar fotos de los establecimientos de salud y descomprimir en la carpeta __assets__ del proyecto
+Descargar fotos de los establecimientos de salud y descomprimir en la carpeta __assets/img_estab/__ del proyecto
 ```
 	https://drive.google.com/file/d/1qUCd3K79VdLJchaMjfwF80DDyUfmrFKE/view?usp=sharing
 ```
