@@ -957,7 +957,18 @@ function change_status_switch_text(e){
     }
 }
 
+const appHeight = () => {
+    const doc = document.documentElement;
+    let vh = window.innerHeight * 0.01;
+    doc.style.setProperty('--app-height', `${vh}px`)
+}
+
 function start(){
+	
+	if(window.matchMedia('(pointer: coarse)').matches){
+        appHeight();
+        window.addEventListener('resize', appHeight, false);
+    }
 
     selectElement('#burge_icon').addEventListener('click', state_menu_burge, false);
 

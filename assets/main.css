@@ -1,4 +1,5 @@
 :root{
+	--app-height: 100%;
     --primary-color: #00868A;
     --secondary-color: #FAEED2;
     --third-color: #7897AB;
@@ -711,6 +712,16 @@ div.map_legend .items b{
     .information .body_sidebar footer div span,
     .body_sidebar{
         font-size: 1.2rem;
+    }
+	
+    .sidebar,
+    .wallpaper{
+        height: 100%;
+        height: calc(var(--app-height, 1vh) * 100);
+    }
+
+    #map{
+        height: calc(calc(var(--app-height, 1vh) * 100) - var(--heigth-nav));
     }
 }
 
