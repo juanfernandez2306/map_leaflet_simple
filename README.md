@@ -8,7 +8,7 @@ para crear aplicaciones de mapas web con __LeafletJS__.
 ![Img overview project](assets/img/overview.gif)
 
 ### :iphone: Mobile
-<img src="./assets/img/overview_mobile.gif" with=280>
+<img src="./assets/img/overview_mobile.gif" width=280>
 
 ## Demo
 
